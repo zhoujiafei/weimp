@@ -7,12 +7,10 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 
-/**
- * Site controller
- */
-class SiteController extends Controller
+//后台管理员相关操作的控制器
+class AdminController extends Controller
 {
-    
+    //访问控制
     public function behaviors()
     {
         return [
@@ -20,7 +18,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login'],
                         'allow' => true,
                     ],
                     [
@@ -39,23 +37,13 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
-
+    //后台首页
     public function actionIndex()
     {
         return $this->render('index');
     }
 
+    //登陆处理（如果登陆成功跳转到后台首页，没有登陆成功就处于登陆页面）
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -72,6 +60,7 @@ class SiteController extends Controller
         }
     }
 
+    //退出登陆
     public function actionLogout()
     {
         Yii::$app->user->logout();
