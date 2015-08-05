@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => '加菲猫微信综合管控平台',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'defaultRoute' => 'admin',

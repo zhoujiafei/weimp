@@ -18,12 +18,20 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'css/bootstrap.min.css',
+        'css/bootstrap-responsive.min.css',
+        'css/unicorn.main.css',
+        'css/unicorn.grey.css',
     ];
     public $js = [
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'js/excanvas.min.js',
+        'js/jquery.min.js',
+        'js/jquery.ui.custom.js',
+        'js/bootstrap.min.js',
+        'js/jquery.flot.min.js',
+        'js/jquery.flot.resize.min.js',
+        'js/jquery.peity.min.js',
+        'js/unicorn.js',
+        'js/unicorn.dashboard.js',
     ];
 }
