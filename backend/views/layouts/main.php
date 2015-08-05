@@ -49,7 +49,7 @@ AppAsset::register($this);
 	<div id="sidebar">
 		<a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
 		<ul>
-			<li class=""><a href="#"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+			<li class="active"><a href="#"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
 			<li class="submenu">
 				<a href="#"><i class="icon icon-th-list"></i> <span>Form elements</span> <span class="label">3</span></a>
 				<ul>
