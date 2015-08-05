@@ -21,9 +21,13 @@ AppAsset::register($this);
 		<h1><a href="###">Unicorn Admin</a></h1>		
 	</div>
 	
+	<!-- 搜索框 -->
 	<div id="search">
 		<input type="text" placeholder="Search here..." /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
 	</div>
+	<!-- 搜索框 -->
+	
+	<!-- 右侧导航栏 -->
 	<div id="user-nav" class="navbar navbar-inverse">
         <ul class="nav btn-group">
             <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
@@ -39,41 +43,24 @@ AppAsset::register($this);
             <li class="btn btn-inverse"><a title="退出" href="<?php echo Url::to(['admin/logout']);?>"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
         </ul>
     </div>
-        
+    <!-- 右侧导航栏 -->
+    
+    <!-- 左侧菜单栏 -->
 	<div id="sidebar">
 		<a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
 		<ul>
-			<li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
+			<li class=""><a href="#"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
 			<li class="submenu">
 				<a href="#"><i class="icon icon-th-list"></i> <span>Form elements</span> <span class="label">3</span></a>
 				<ul>
-					<li><a href="form-common.html">Common elements</a></li>
-					<li><a href="form-validation.html">Validation</a></li>
-					<li><a href="form-wizard.html">Wizard</a></li>
+					<li><a href="#">Common elements</a></li>
+					<li><a href="#">Validation</a></li>
+					<li><a href="#">Wizard</a></li>
 				</ul>
-			</li>
-			<li><a href="buttons.html"><i class="icon icon-tint"></i> <span>Buttons &amp; icons</span></a></li>
-			<li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
-			<li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
-			<li><a href="grid.html"><i class="icon icon-th-list"></i> <span>Grid Layout</span></a></li>
-			<li class="submenu">
-				<a href="#"><i class="icon icon-file"></i> <span>Sample pages</span> <span class="label">4</span></a>
-				<ul>
-					<li><a href="invoice.html">Invoice</a></li>
-					<li><a href="chat.html">Support chat</a></li>
-					<li><a href="calendar.html">Calendar</a></li>
-					<li><a href="gallery.html">Gallery</a></li>
-				</ul>
-			</li>
-			<li>
-				<a href="charts.html"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a>
-			</li>
-			<li>
-				<a href="widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a>
 			</li>
 		</ul>
-	
 	</div>
+	<!-- 右侧导航栏 -->
 	
 	<div id="content">
 		<div id="content-header">
@@ -85,11 +72,15 @@ AppAsset::register($this);
 				<a class="btn btn-large tip-bottom" title="Manage Orders"><i class="icon-shopping-cart"></i></a>
 			</div>
 		</div>
+		
+		<!-- 面包屑 -->
 		<div id="breadcrumb">
 			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
 			<a href="#" class="current">Dashboard</a>
 		</div>
-		<div class="container-fluid">
+		<!-- 面包屑 -->
+		
+		<div class="container-fluid">			
 			<?php echo $content;?>
 			<div class="row-fluid">
 				<div id="footer" class="span12">
