@@ -1,40 +1,30 @@
+<?php use yii\helpers\Url;?>
 <div id="logo">
-    <img src="img/logo.png" alt="" />
+    <img src="<?php echo Yii::$app->request->baseUrl; ?>/img/logo.png" alt="加菲猫微信综合管控平台" />
 </div>
 <div id="loginbox">            
-    <form id="loginform" class="form-vertical" action="index.html" />
-		<p>Enter username and password to continue.</p>
+    <form id="loginform" class="form-vertical" action="<?php echo Url::to(['admin/login']);?>" method="post" />
+		<p>请输入用户名和密码</p>
         <div class="control-group">
             <div class="controls">
                 <div class="input-prepend">
-                    <span class="add-on"><i class="icon-user"></i></span><input type="text" placeholder="Username" />
+                    <span class="add-on"><i class="icon-user"></i></span>
+                    <input type="text" placeholder="请输入用户名" name="LoginForm[username]" />
                 </div>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
                 <div class="input-prepend">
-                    <span class="add-on"><i class="icon-lock"></i></span><input type="password" placeholder="Password" />
+                    <span class="add-on"><i class="icon-lock"></i></span>
+                    <input type="password" placeholder="请输入密码" name="LoginForm[password]" />
                 </div>
             </div>
         </div>
         <div class="form-actions">
-            <span class="pull-left"><a href="#" class="flip-link" id="to-recover">Lost password?</a></span>
-            <span class="pull-right"><input type="submit" class="btn btn-inverse" value="Login" /></span>
-        </div>
-    </form>
-    <form id="recoverform" action="#" class="form-vertical" />
-		<p>Enter your e-mail address below and we will send you instructions how to recover a password.</p>
-		<div class="control-group">
-            <div class="controls">
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
-                </div>
-            </div>
-        </div>
-        <div class="form-actions">
-            <span class="pull-left"><a href="#" class="flip-link" id="to-login">&lt; Back to login</a></span>
-            <span class="pull-right"><input type="submit" class="btn btn-inverse" value="Recover" /></span>
+        	<input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
+            <span class="pull-left"><a href="#" class="flip-link" id="to-recover">忘记密码</a></span>
+            <span class="pull-right"><input type="submit" class="btn btn-inverse" value="登录" /></span>
         </div>
     </form>
 </div>

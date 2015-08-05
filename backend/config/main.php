@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'defaultRoute' => 'admin',
+    'language' => 'zh-CN',
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
