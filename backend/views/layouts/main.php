@@ -1,4 +1,5 @@
 <?php
+use backend\widgets\Breadcrumb;
 use backend\widgets\Menu;
 use yii\helpers\Url;
 use backend\assets\AppAsset;
@@ -48,7 +49,7 @@ AppAsset::register($this);
     
     <!-- 左侧菜单栏 -->
 	<?php echo Menu::widget([
-	       'active' => 'home5',
+	       'active' => isset($this->params['active_menu']) ? $this->params['active_menu'] : null,
 	]);?>
 	<!-- 左侧菜单栏 -->
 	
@@ -64,10 +65,7 @@ AppAsset::register($this);
 		</div>
 		
 		<!-- 面包屑 -->
-		<div id="breadcrumb">
-			<a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-			<a href="#" class="current">Dashboard</a>
-		</div>
+		<?php echo Breadcrumb::widget();?>
 		<!-- 面包屑 -->
 		
 		<div class="container-fluid">			

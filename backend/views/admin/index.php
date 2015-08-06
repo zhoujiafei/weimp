@@ -1,5 +1,9 @@
 <div style="width:100%;height:800px;">
 
-hello
+<?php 
+
+  $this->params = ['active_menu' => 'home3'];
+
+?>
 
 </div>
