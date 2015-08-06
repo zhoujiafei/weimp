@@ -65,7 +65,9 @@ AppAsset::register($this);
 		</div>
 		
 		<!-- 面包屑 -->
-		<?php echo Breadcrumb::widget();?>
+		<?php echo Breadcrumb::widget([
+		        'nav' => isset($this->params['breadcrumb']) ? $this->params['breadcrumb'] : [],
+		]);?>
 		<!-- 面包屑 -->
 		
 		<div class="container-fluid">			

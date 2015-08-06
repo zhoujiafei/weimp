@@ -2,7 +2,15 @@
 
 <?php 
 
-  $this->params = ['active_menu' => 'home3'];
+  $this->params = [
+  	'active_menu' => 'home3',
+  	'breadcrumb'  => [
+                      ['name' => 'hello','url' => '#','current' => 0],
+                      
+  
+                  ],
+  
+  ];
 
 ?>
 

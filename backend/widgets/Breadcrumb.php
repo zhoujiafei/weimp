@@ -7,20 +7,20 @@ use yii\base\Widget;
 //面包屑小部件
 class Breadcrumb extends Widget
 {
-    private $_active = null;
+    private $_nav = [];
     public function run() {
         return $this->render('breadcrumb',[
-                'active' => $this->getActive(),
+                'nav' => $this->getNav(),
         ]);
     }
 
     //获取当前活动标签
-    public function getActive() {
-        return $this->_active == null ? 'home' : $this->_active;
+    public function getNav() {
+        return $this->_nav;
     }
 
     //设置当前活动标签
-    public function setActive($active = null) {
-        $this->_active = $active;
+    public function setNav($nav = []) {
+        $this->_nav = $nav;
     }
 }

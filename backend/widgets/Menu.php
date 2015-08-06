@@ -9,7 +9,7 @@ class Menu extends Widget
 {
     private $_active = null;
     public function run() {
-        return $this->render('index',[
+        return $this->render('menu',[
                 'active' => $this->getActive(),
         ]);
     }
