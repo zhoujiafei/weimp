@@ -49,7 +49,7 @@ AppAsset::register($this);
     
     <!-- 左侧菜单栏 -->
 	<?php echo Menu::widget([
-	       'active' => isset($this->params['active_menu']) ? $this->params['active_menu'] : null,
+	       'active' => !empty(Yii::$app->controller->id) ? Yii::$app->controller->id : null,
 	]);?>
 	<!-- 左侧菜单栏 -->
 	
