@@ -1,4 +1,5 @@
 <?php
+use backend\widgets\Menu;
 use yii\helpers\Url;
 use backend\assets\AppAsset;
 use yii\helpers\Html;
@@ -18,7 +19,7 @@ AppAsset::register($this);
 <body>
 	<?php $this->beginBody() ?>
 	<div id="header">
-		<h1><a href="###">Unicorn Admin</a></h1>		
+		<h1><a href="javascript:void(0);"><?= Yii::$app->name ?></a></h1>	
 	</div>
 	
 	<!-- 搜索框 -->
@@ -46,21 +47,10 @@ AppAsset::register($this);
     <!-- 右侧导航栏 -->
     
     <!-- 左侧菜单栏 -->
-	<div id="sidebar">
-		<a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
-		<ul>
-			<li class="active"><a href="#"><i class="icon icon-home"></i> <span>Dashboard</span></a></li>
-			<li class="submenu">
-				<a href="#"><i class="icon icon-th-list"></i> <span>Form elements</span> <span class="label">3</span></a>
-				<ul>
-					<li><a href="#">Common elements</a></li>
-					<li><a href="#">Validation</a></li>
-					<li><a href="#">Wizard</a></li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-	<!-- 右侧导航栏 -->
+	<?php echo Menu::widget([
+	       'active' => 'home5',
+	]);?>
+	<!-- 左侧菜单栏 -->
 	
 	<div id="content">
 		<div id="content-header">
