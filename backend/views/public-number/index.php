@@ -1,5 +1,5 @@
 <?php
-use yii\widgets\LinkPager;
+use backend\widgets\LinkPager;
 
 $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','current' => 1]]];
 
@@ -56,10 +56,7 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
       			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" style="height:28px;">
          			<div class="pagination alternate">
 								<?php
-               			 echo LinkPager::widget([
-                  			   'pagination' => $pages,
-                  			   'options' => [],
-               			 ]);
+               			 echo LinkPager::widget(['pagination' => $pages]);
                			?>
 						</div>
       			</div>
