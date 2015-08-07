@@ -1,10 +1,8 @@
 <?php
 use backend\widgets\LinkPager;
-
+use yii\helpers\Url;
 $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','current' => 1]]];
-
 ?>
-
 <div class="row-fluid">
 <div class="span12">
 	<div class="widget-box">
@@ -41,8 +39,8 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 						<td><?= $v['type'] ?></td>
 						<td><?= $v['status'] ?></td>
 						<td>
-						   <button class="btn btn-primary"><i class="icon-pencil icon-white"></i> Edit</button>
-						   <button class="btn btn-danger"><i class="icon-remove icon-white"></i> Delete</button>
+						   <a href="<?= Url::to(['public-number/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
+						   <a href="<?= Url::to(['public-number/delete','id' => $v['id']]);?>" class="btn btn-danger"><i class="icon-remove icon-white"></i> 删除</a>
 						</td>
 					</tr>
 					<?php endforeach; ?>
@@ -55,9 +53,7 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
       			</div>
       			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" style="height:28px;">
          			<div class="pagination alternate">
-								<?php
-               			 echo LinkPager::widget(['pagination' => $pages]);
-               			?>
+						<?php echo LinkPager::widget(['pagination' => $pages]);?>
 						</div>
       			</div>
 			</div>	
@@ -65,5 +61,3 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 	</div>
 </div>
 </div>
-				
-

@@ -35,4 +35,14 @@ class AppAsset extends AssetBundle
         'js/unicorn.js',
         'js/unicorn.dashboard.js',
     ];
+
+     //定义按需加载JS方法，注意加载顺序在最后 
+    public static function addScript($view, $jsfile) {
+        $view->registerJsFile($jsfile, ['depends' => 'backend\assets\AppAsset']);  
+    }  
+
+   //定义按需加载css方法，注意加载顺序在最后  
+    public static function addCss($view, $cssfile) {
+        $view->registerCssFile($cssfile, ['depends' => 'backend\assets\AppAsset']);
+    }
 }
