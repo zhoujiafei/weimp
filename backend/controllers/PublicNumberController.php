@@ -7,6 +7,7 @@ use common\models\PublicNumberSearch;
 use backend\base\BaseBackController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 //公众号管理控制器
 class PublicNumberController extends BaseBackController
@@ -27,13 +28,16 @@ class PublicNumberController extends BaseBackController
     //显示列表
     public function actionIndex()
     {
-        $searchModel = new PublicNumberSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        $query = PublicNumber::find();
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 10]);
+        $models = $query->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->all();
+         return $this->render('index', [
+              'models' => $models,
+              'pages' => $pages,
+         ]);
     }
 
     //表单页

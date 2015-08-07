@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
         'css/bootstrap-responsive.min.css',
         'css/unicorn.main.css',
         'css/unicorn.grey.css',
+        'css/uniform.css',
     ];
     public $js = [
         'js/excanvas.min.js',

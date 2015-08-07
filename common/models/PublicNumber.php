@@ -35,8 +35,8 @@ class PublicNumber extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type', 'appid', 'appsecret', 'url', 'token', 'update_time'], 'required'],
-            [['type', 'create_time', 'update_time', 'order_id'], 'integer'],
+            [['name', 'type', 'appid', 'appsecret', 'url', 'token'], 'required'],
+            [['type', 'create_time', 'update_time', 'order_id', 'status'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['appid', 'appsecret'], 'string', 'max' => 120],
             [['encoding_aes_key', 'token'], 'string', 'max' => 60],
