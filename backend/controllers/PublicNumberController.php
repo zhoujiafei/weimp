@@ -79,10 +79,10 @@ class PublicNumberController extends BaseBackController
         $post['url'] = 'http://www.qq.com';
         $post['token'] = 'weixin';
         $model = new PublicNumber();
-        if ($model->load($post) && $model->save()) {
+        if ($model->load(['PublicNumber' => $post]) && $model->save()) {
             $model->order_id = $model->id;
             $model->save();
-            return $this->redirect(['form', 'id' => $model->id]);
+            return $this->redirect('index');
         } else {
             throw new NotFoundHttpException(Yii::t('yii','An internal server error occurred.'));
         }
@@ -116,10 +116,9 @@ class PublicNumberController extends BaseBackController
 
         $model = $this->findModel($id);
         $post['update_time'] = time();
-        $post['url'] = 'http://www.qq.com';
-        $post['token'] = 'weixin';
-        if ($model->load($post) && $model->save()) {
-            return $this->redirect(['form', 'id' => $model->id]);
+        unset($post['id']);
+        if ($model->load(['PublicNumber' => $post]) && $model->save()) {
+            return $this->redirect('index');
         } else {
             throw new NotFoundHttpException(Yii::t('yii','An internal server error occurred.'));
         }
