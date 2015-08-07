@@ -30,7 +30,7 @@ class PublicNumberController extends BaseBackController
     {
         $query = PublicNumber::find();
         $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 10]);
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
         $models = $query->offset($pages->offset)
                         ->limit($pages->limit)
                         ->all();
