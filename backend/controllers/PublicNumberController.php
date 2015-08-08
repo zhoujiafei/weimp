@@ -4,7 +4,9 @@ namespace backend\controllers;
 use Yii;
 use common\models\PublicNumber;
 use common\models\PublicNumberSearch;
+use common\helpers\Out;
 use backend\base\BaseBackController;
+use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
@@ -18,7 +20,7 @@ class PublicNumberController extends BaseBackController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post','get'],
+                    'delete' => ['post'],
                     'create' => ['post'],
                     'update' => ['post'],
                 ],
@@ -135,9 +137,15 @@ class PublicNumberController extends BaseBackController
     }
 
     //删除一条公众号
-    public function actionDelete($id) {
-        $this->findModel($id)->delete();
-        return $this->redirect(['index']);
+    public function actionDelete() {
+        $id = Yii::$app->request->post('id');
+        if (!intval($id))
+           Error::output(Error::ERR_NOID);
+        if ($this->findModel($id)->delete()) {
+           Error::output(Error::SUCCESS);
+        }else{
+           Error::output(Error::ERR_FAIL);
+        }
     }
 
     //加载模型
