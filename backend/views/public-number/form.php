@@ -6,7 +6,6 @@ AppAsset::addCss($this,'@web/css/select2.css');
 AppAsset::addScript($this,'@web/js/jquery.uniform.js');
 AppAsset::addScript($this,'@web/js/select2.min.js');
 AppAsset::addScript($this,'@web/js/unicorn.js');
-AppAsset::addScript($this,'@web/js/unicorn.form_common.js');
 
 if(!empty($model)) {
     $action = 'update';
@@ -23,6 +22,13 @@ $this->params = ['breadcrumb'  => [
                                   ],
                 ];
 ?>
+<script>
+$(document).ready(function(){
+	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	$('select').select2();
+});
+
+</script>
 <div class="row-fluid">
 	<div class="span12">
 		<div class="widget-box">
@@ -62,17 +68,20 @@ $this->params = ['breadcrumb'  => [
 					<div class="control-group">
 						<label class="control-label">消息加解密方式</label>
 						<div class="controls">
-							<label><input type="radio" name="radios" value=1 /> 明文模式</label>
-							<label><input type="radio" name="radios" value=2 /> 兼容模式</label>
-							<label><input type="radio" name="radios" value=3 /> 安全模式（推荐）</label>
+						   <?php foreach (Yii::$app->params['encript_mode'] AS $k => $v): ?>
+						   <?php $checked = $k == $encript_mode ? 'checked' : '';?>
+							<label><input type="radio" name="encript_mode" value=<?= $k ?> <?= $checked ?> /> <?= $v ?></label>
+							<?php endforeach; ?>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label">选择类型</label>
 						<div class="controls">
 							<select name="type">
-								<option value=1 />订阅号
-								<option value=2 />服务号
+							   <?php foreach (Yii::$app->params['public_number_type'] AS $k => $v): ?>
+							   <?php $selected = $k == $type ? 'selected="selected"' : '';?>
+								<option value=<?= $k ?> <?= $selected ?>/><?= $v ?>
+								<?php endforeach; ?>
 							</select>
 						</div>
 					</div>

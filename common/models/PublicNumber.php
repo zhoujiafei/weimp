@@ -36,7 +36,7 @@ class PublicNumber extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'appid', 'appsecret', 'url', 'token'], 'required'],
-            [['type', 'create_time', 'update_time', 'order_id', 'status'], 'integer'],
+            [['type', 'create_time', 'update_time', 'order_id', 'status','encript_mode'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['appid', 'appsecret'], 'string', 'max' => 120],
             [['encoding_aes_key', 'token'], 'string', 'max' => 60],

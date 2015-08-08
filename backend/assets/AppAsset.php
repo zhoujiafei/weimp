@@ -30,6 +30,7 @@ class AppAsset extends AssetBundle
         'js/jquery.min.js',
         'js/jquery.ui.custom.js',
         'js/bootstrap.min.js',
+        'js/unicorn.js'
     ];
    
     public $jsOptions = ['position' => View::POS_HEAD];

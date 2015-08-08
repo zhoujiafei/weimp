@@ -79,6 +79,9 @@ class PublicNumberController extends BaseBackController
         if (empty($post['appsecret'])) {
            throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => 'AppSecret(应用密钥)']));
         }
+        
+        //加解密模式
+        $post['encript_mode'] = !empty($post['encript_mode']) ? intval($post['encript_mode']) : 1;//默认明文模式
         $post['create_time'] = time();
         $post['update_time'] = time();
         $post['url'] = 'http://www.qq.com';
@@ -119,6 +122,8 @@ class PublicNumberController extends BaseBackController
            throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => 'AppSecret(应用密钥)']));
         }
 
+        //加解密模式
+        $post['encript_mode'] = !empty($post['encript_mode']) ? intval($post['encript_mode']) : 1;//默认明文模式
         $model = $this->findModel($id);
         $post['update_time'] = time();
         unset($post['id']);
