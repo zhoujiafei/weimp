@@ -16,13 +16,10 @@
     </div>
   </div>
 </div>
-
-
 <div class="alert alert-success" id="AlertSuccess" style="display:none;">
 	<button class="close" data-dismiss="alert">×</button>
 	<strong>删除成功!</strong> 您已经删除这条记录！
 </div>
-
 <div class="alert alert-error" id="AlertFail" style="display:none;">
 	<button class="close" data-dismiss="alert">×</button>
 	<strong>删除失败!</strong> 抱歉，删除失败！
