@@ -20,7 +20,7 @@ AppAsset::register($this);
 <body>
 	<?php $this->beginBody() ?>
 	<div id="header">
-		<h1><a href="javascript:void(0);"><?= Yii::$app->name ?></a></h1>	
+		<h1><a href="javascript:void(0);"><?= Yii::$app->name ?></a></h1>
 	</div>
 	
 	<!-- 搜索框 -->

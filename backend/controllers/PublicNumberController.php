@@ -33,11 +33,17 @@ class PublicNumberController extends BaseBackController
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
         $models = $query->offset($pages->offset)
                         ->limit($pages->limit)
-                        ->all();
-         return $this->render('index', [
+                        ->orderBy(['order_id' => SORT_DESC]) //倒序排列
+                        ->asArray() //转换成数组
+                        ->all();   
+        foreach ($models AS $k => &$v) {
+           $v['status_text'] = intval($v['status'] == 1) ? '已开启' : '已禁用';
+           $v['type_text'] = Yii::$app->params['public_number_type'][$v['type']];
+        }
+        return $this->render('index', [
               'models' => $models,
               'pages' => $pages,
-         ]);
+        ]);
     }
 
     //表单页
@@ -73,7 +79,6 @@ class PublicNumberController extends BaseBackController
         if (empty($post['appsecret'])) {
            throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => 'AppSecret(应用密钥)']));
         }
-
         $post['create_time'] = time();
         $post['update_time'] = time();
         $post['url'] = 'http://www.qq.com';

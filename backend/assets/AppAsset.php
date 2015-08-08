@@ -8,6 +8,7 @@
 namespace backend\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * @author Qiang Xue <qiang.xue@gmail.com>
@@ -20,29 +21,26 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/bootstrap.min.css',
         'css/bootstrap-responsive.min.css',
+        'css/uniform.css',
         'css/unicorn.main.css',
         'css/unicorn.grey.css',
-        'css/uniform.css',
     ];
     public $js = [
         'js/excanvas.min.js',
         'js/jquery.min.js',
         'js/jquery.ui.custom.js',
         'js/bootstrap.min.js',
-        'js/jquery.flot.min.js',
-        'js/jquery.flot.resize.min.js',
-        'js/jquery.peity.min.js',
-        'js/unicorn.js',
-        'js/unicorn.dashboard.js',
     ];
+   
+    public $jsOptions = ['position' => View::POS_HEAD];
 
      //定义按需加载JS方法，注意加载顺序在最后 
     public static function addScript($view, $jsfile) {
-        $view->registerJsFile($jsfile, ['depends' => 'backend\assets\AppAsset']);  
+        $view->registerJsFile($jsfile,['depends' => AppAsset::className(),'position' => View::POS_HEAD]);
     }  
 
    //定义按需加载css方法，注意加载顺序在最后  
     public static function addCss($view, $cssfile) {
-        $view->registerCssFile($cssfile, ['depends' => 'backend\assets\AppAsset']);
+        $view->registerCssFile($cssfile,['depends' => AppAsset::className()]);
     }
 }

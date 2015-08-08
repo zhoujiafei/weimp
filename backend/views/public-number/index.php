@@ -36,8 +36,8 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
    						<div class="checker"><span><input type="checkbox" style="opacity: 0;"></span></div>
 						</td>
 						<td><?= $v['name'] ?></td>
-						<td><?= $v['type'] ?></td>
-						<td><?= $v['status'] ?></td>
+						<td><?= $v['type_text'] ?></td>
+						<td><?= $v['status_text'] ?></td>
 						<td>
 						   <a href="<?= Url::to(['public-number/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
 						   <a href="<?= Url::to(['public-number/delete','id' => $v['id']]);?>" class="btn btn-danger"><i class="icon-remove icon-white"></i> 删除</a>
@@ -48,10 +48,12 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 				</tbody>
 			</table>
 			<div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+			      <!--
    			   <div class="dataTables_filter" style="margin-top:-4px;margin-left: 14px;">
       			   <label>搜索: <input type="text"></label>
       			</div>
-      			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" style="height:28px;">
+      			-->
+      			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
          			<div class="pagination alternate">
 						<?php echo LinkPager::widget(['pagination' => $pages]);?>
 						</div>
