@@ -4,6 +4,7 @@ use Yii;
 use common\models\PublicNumber;
 use common\models\PublicNumberSearch;
 use common\helpers\Out;
+use common\helpers\Common;
 use backend\base\BaseBackController;
 use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
@@ -85,8 +86,8 @@ class PublicNumberController extends BaseBackController
         $post['encript_mode'] = !empty($post['encript_mode']) ? intval($post['encript_mode']) : 1;//默认明文模式
         $post['create_time'] = time();
         $post['update_time'] = time();
-        $post['url'] = 'http://www.qq.com';
-        $post['token'] = 'weixin';
+        $post['unique_id'] = md5(Yii::$app->security->generateRandomString() . time());//随机生成
+        $post['token'] = Common::getGenerateSalt(8);//随机生成英文或者数字组合的随机字符串
         $model = new PublicNumber();
         if ($model->load(['PublicNumber' => $post]) && $model->save()) {
             $model->order_id = $model->id;

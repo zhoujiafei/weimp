@@ -65,6 +65,22 @@ $(document).ready(function(){
 							<span class="help-block">（安全模式下必填）请在公众平台中点击随机生成得到密钥，不需要自己填写</span>
 						</div>
 					</div>
+					<?php if ($action == 'update'): ?>
+					<div class="control-group">
+						<label class="control-label">URL(服务器地址)</label>
+						<div class="controls">
+							<input type="text" readonly value="<?= Yii::$app->params['weixin_callback'] . '?id=' . $unique_id; ?>" />
+							<span class="help-block">请将此地址填写到微信公众平台的URL(服务器地址)处，作为微信的回调地址</span>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Token(令牌)</label>
+						<div class="controls">
+							<input type="text" readonly value="<?= $token ?>" />
+							<span class="help-block">请将此令牌填写到微信公众平台的Token(令牌)处</span>
+						</div>
+					</div>
+					<?php endif; ?>
 					<div class="control-group">
 						<label class="control-label">消息加解密方式</label>
 						<div class="controls">

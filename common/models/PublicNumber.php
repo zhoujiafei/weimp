@@ -13,7 +13,6 @@ use Yii;
  * @property string $appid
  * @property string $appsecret
  * @property string $encoding_aes_key
- * @property string $url
  * @property string $token
  * @property integer $create_time
  * @property integer $update_time
@@ -35,12 +34,11 @@ class PublicNumber extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'appid', 'appsecret', 'url', 'token'], 'required'],
+            [['name', 'appid', 'appsecret', 'token','unique_id'], 'required'],
             [['type', 'create_time', 'update_time', 'order_id', 'status','encript_mode'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['appid', 'appsecret'], 'string', 'max' => 120],
-            [['encoding_aes_key', 'token'], 'string', 'max' => 60],
-            [['url'], 'string', 'max' => 250]
+            [['encoding_aes_key', 'token','unique_id'], 'string', 'max' => 60],
         ];
     }
 
@@ -56,7 +54,6 @@ class PublicNumber extends \yii\db\ActiveRecord
             'appid' => 'Appid',
             'appsecret' => 'Appsecret',
             'encoding_aes_key' => 'Encoding Aes Key',
-            'url' => 'Url',
             'token' => 'Token',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
