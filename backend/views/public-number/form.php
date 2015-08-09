@@ -59,7 +59,7 @@ $(document).ready(function(){
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label">消息加密密钥</label>
+						<label class="control-label">EncodingAESKey</label>
 						<div class="controls">
 							<input type="text" placeholder="这里输入EncodingAESKey..." name="encoding_aes_key" value="<?= $encoding_aes_key ?>" />
 							<span class="help-block">（安全模式下必填）请在公众平台中点击随机生成得到密钥，不需要自己填写</span>

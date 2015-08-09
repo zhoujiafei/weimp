@@ -41,6 +41,7 @@ class PublicNumberController extends BaseBackController
         foreach ($models AS $k => &$v) {
            $v['status_text'] = intval($v['status'] == 1) ? '已开启' : '已禁用';
            $v['type_text'] = Yii::$app->params['public_number_type'][$v['type']];
+           $v['is_access_text'] = intval($v['is_access']) ? '是' : '否';
         }
         return $this->render('index', [
               'models' => $models,
@@ -92,7 +93,7 @@ class PublicNumberController extends BaseBackController
         if ($model->load(['PublicNumber' => $post]) && $model->save()) {
             $model->order_id = $model->id;
             $model->save();
-            return $this->redirect('index');
+            return $this->redirect(['public-number/form','id' => $model->id]);
         } else {
             throw new NotFoundHttpException(Yii::t('yii','An internal server error occurred.'));
         }

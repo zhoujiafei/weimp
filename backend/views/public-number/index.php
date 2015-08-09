@@ -30,6 +30,7 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 						<th>公众号名称</th>
 						<th>公众号类型</th>
 						<th>公众号状态</th>
+						<th>是否已接入开发平台</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -41,6 +42,7 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 						<td><?= $v['name'] ?></td>
 						<td><?= $v['type_text'] ?></td>
 						<td><?= $v['status_text'] ?></td>
+						<td><?= $v['is_access_text'] ?></td>
 						<td>
 						   <a href="<?= Url::to(['public-number/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
 						   <a href="javascript:void(0);" _id=<?= $v['id'] ?> class="btn btn-danger remove-row"><i class="icon-remove icon-white"></i> 删除</a>
@@ -49,7 +51,7 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 					<?php endforeach; ?>
 					<?php else: ?>
 					<tr>
-					   <td colspan="5">
+					   <td colspan="6">
    					   <div class="alert alert-info" style="margin-top:22px;">
    							<button class="close" data-dismiss="alert">×</button>
    							<strong>友情提醒！</strong> 您还未创建一条公众号！
