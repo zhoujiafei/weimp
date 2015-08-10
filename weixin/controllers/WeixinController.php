@@ -4,12 +4,16 @@ namespace weixin\controllers;
 use Yii;
 use weixin\base\BaseWeixinController;
 
+//微信回调控制器
 class WeixinController extends BaseWeixinController
 {
-
     public function actionIndex()
     {
-        echo 1111;
+        
+        
+       
+        
+        
     }
     
     public function actions()
