@@ -42,10 +42,11 @@ class BaseWeixinController extends Controller
         $this->wechat = Yii::createObject([
             'class' => 'weixin\components\WeChat',
             'options' => [
-    	                      'token'     => $publicNumber['token'], //填写你设定的key
-    	                      'appid'     => $publicNumber['appid'], //填写高级调用功能的app id
-    	                      'appsecret' => $publicNumber['appsecret']  //填写高级调用功能的密钥
-		                 ]
+    	                      'token'         => $publicNumber['token'], //填写你设定的key
+    	                      'appid'         => $publicNumber['appid'], //填写高级调用功能的app id
+    	                      'appsecret'     => $publicNumber['appsecret'],  //填写高级调用功能的密钥
+    	                      'encodingaeskey'=> $publicNumber['encoding_aes_key'], //填写加密用的EncodingAESKey
+		                   ]
         ]);
 	}
 }
