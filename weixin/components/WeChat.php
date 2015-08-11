@@ -102,6 +102,7 @@ class WeChat extends Component
 	const USER_GROUP_URL='/groups/getid?';
 	const GROUP_CREATE_URL='/groups/create?';
 	const GROUP_UPDATE_URL='/groups/update?';
+	const GROUP_DELETE_URL='/groups/delete?';
 	const GROUP_MEMBER_UPDATE_URL='/groups/members/update?';
 	const GROUP_MEMBER_BATCHUPDATE_URL='/groups/members/batchupdate?';
 	const CUSTOM_SEND_URL='/message/custom/send?';
@@ -2226,6 +2227,31 @@ class WeChat extends Component
 				'group'=>array('id'=>$groupid,'name'=>$name)
 		);
 		$result = $this->http_post(self::API_URL_PREFIX.self::GROUP_UPDATE_URL.'access_token='.$this->access_token,self::json_encode($data));
+		if ($result)
+		{
+			$json = json_decode($result,true);
+			if (!$json || !empty($json['errcode'])) {
+				$this->errCode = $json['errcode'];
+				$this->errMsg = $json['errmsg'];
+				return false;
+			}
+			return $json;
+		}
+		return false;
+	}
+
+	/**
+	 * 删除分组
+	 * @param int $groupid 分组id
+	 * @return boolean|array
+	 */
+	
+	public function deleteGroup($groupid) {
+   	if (!$this->access_token && !$this->checkAuth()) return false;
+		$data = array(
+				'group'=>array('id'=>$groupid)
+		);
+		$result = $this->http_post(self::API_URL_PREFIX.self::GROUP_DELETE_URL.'access_token='.$this->access_token,self::json_encode($data));
 		if ($result)
 		{
 			$json = json_decode($result,true);

@@ -32,6 +32,8 @@ $this->params = ['breadcrumb'  => [
 					<tr>
 						<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th>
 						<th>分组名称</th>
+						<th>所属公众号</th>
+						<th>组内成员数</th>
 						<th>创建时间</th>
 						<th>操作</th>
 					</tr>
@@ -42,6 +44,8 @@ $this->params = ['breadcrumb'  => [
 					<tr id="tr_<?= $v['id'] ?>">
 						<td><input type="checkbox" /></td>
 						<td><?= $v['name'] ?></td>
+						<td><?= $v['public_number_name'] ?></td>
+						<td><?= $v['count'] ?></td>
 						<td><?= $v['create_time'] ?></td>
 						<td>
 						   <a href="<?= Url::to(['members-group/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>

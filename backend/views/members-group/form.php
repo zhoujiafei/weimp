@@ -23,6 +23,12 @@ $this->params = ['breadcrumb'  => [
                                   ],
                 ];
 ?>
+<script>
+$(document).ready(function(){
+	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+	$('select').select2();
+});
+</script>
 <div class="row-fluid">
 	<div class="span12">
 		<div class="widget-box">
@@ -40,6 +46,27 @@ $this->params = ['breadcrumb'  => [
 							<input type="text" placeholder="这里输入分组名称..." name="name" value="<?= $name ?>" />
 						</div>
 					</div>
+					<?php if($action == 'create'): ?>
+					<div class="control-group">
+						<label class="control-label">所属公众号</label>
+						<div class="controls">
+							<select name="public_id">
+							   <option value=0 />选择公众号
+							   <?php foreach ($public_numbers AS $k => $v): ?>
+							   <?php $selected = $v['id'] == $public_id ? 'selected="selected"' : '';?>
+								<option value=<?= $v['id'] ?> <?= $selected ?>/><?= $v['name'] ?>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<?php else: ?>
+					<div class="control-group">
+						<label class="control-label">所属公众号</label>
+						<div class="controls">
+							<input type="text" value="" readonly />
+						</div>
+					</div>
+					<?php endif; ?>
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
 						<input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">

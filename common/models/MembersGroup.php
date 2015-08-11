@@ -20,19 +20,17 @@ class MembersGroup extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%members_group}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['group_id', 'name'], 'required'],
-            [['group_id', 'count', 'create_time', 'update_time', 'order_id'], 'integer'],
+            [['group_id', 'name','public_id'], 'required'],
+            [['group_id', 'count', 'create_time', 'update_time', 'order_id','public_id'], 'integer'],
             [['name'], 'string', 'max' => 20]
         ];
     }
@@ -40,8 +38,7 @@ class MembersGroup extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'group_id' => 'Group ID',
@@ -51,5 +48,10 @@ class MembersGroup extends \yii\db\ActiveRecord
             'update_time' => '更新时间',
             'order_id' => '排序ID',
         ];
+    }
+    
+    //获取关联的公众号
+    public function getPublicNumber() {
+       return $this->hasOne(PublicNumber::className(),['id' => 'public_id']);
     }
 }
