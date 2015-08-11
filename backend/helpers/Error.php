@@ -4,7 +4,7 @@ namespace backend\helpers;
 
 class Error
 {
-    const SUCCESS = 0;
+   const SUCCESS = 0;
 	const ERR_UNKNOW = -1;
 	const ERR_FAIL = 10001;
 	const ERR_NOID = 10002;
@@ -29,10 +29,10 @@ class Error
 	public static function getErrorInfo()
 	{
 		return [
-		    self::SUCCESS                   => '成功', 
+		   self::SUCCESS              => '成功', 
 			self::ERR_UNKNOW 				=> '未知错误',
-			self::ERR_FAIL 			        => '失败',
-			self::ERR_NOID         			=> '缺少ID',
+			self::ERR_FAIL 			   => '失败',
+			self::ERR_NOID         	   => '缺少ID',
 		];
 	}
 }

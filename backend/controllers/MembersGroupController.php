@@ -1,121 +1,123 @@
 <?php
-
 namespace backend\controllers;
-
 use Yii;
 use common\models\MembersGroup;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use common\helpers\Out;
+use common\helpers\Common;
+use backend\base\BaseBackController;
+use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
-/**
- * MembersGroupController implements the CRUD actions for MembersGroup model.
- */
-class MembersGroupController extends Controller
+//公众号管理控制器
+class MembersGroupController extends BaseBackController
 {
-    public function behaviors()
-    {
+    //操作类型控制
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'create' => ['post'],
+                    'update' => ['post'],
                 ],
             ],
         ];
     }
 
-    /**
-     * Lists all MembersGroup models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => MembersGroup::find(),
-        ]);
-
+    //显示列表
+    public function actionIndex() {
+        $query = MembersGroup::find();
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
+        $models = $query->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->orderBy(['order_id' => SORT_DESC]) //倒序排列
+                        ->asArray() //转换成数组
+                        ->all();
+        if ($models) {
+           foreach ($models AS $k => & $v) {
+              $v['create_time'] = date('Y-m-d H:s',$v['create_time']);
+           }  
+        }
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+              'models' => $models,
+              'pages' => $pages,
         ]);
     }
 
-    /**
-     * Displays a single MembersGroup model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    //表单页
+    public function actionForm() {
+        $id = Yii::$app->request->get('id');
+        $model = null;
+        if (!empty($id))
+            $model = $this->findModel($id);
+        return $this->render('form', [
+            'model' => $model,
         ]);
     }
 
-    /**
-     * Creates a new MembersGroup model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
+    //添加一个公众号
+    public function actionCreate() {
+        $post = Yii::$app->request->post();
+        //判断名称
+        if (empty($post['name'])) {
+           throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => '分组名称']));
+        }
+        $post['create_time'] = time();
+        $post['update_time'] = time();
+        $post['group_id'] = 123;//这个需要到微信平台申请
         $model = new MembersGroup();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(['MembersGroup' => $post]) && $model->save()) {
+            $model->order_id = $model->id;
+            $model->save();
+            return $this->redirect(['members-group/form','id' => $model->id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            throw new NotFoundHttpException(Yii::t('yii','An internal server error occurred.'));
         }
     }
 
-    /**
-     * Updates an existing MembersGroup model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
+    //更新公众号相关信息
+    public function actionUpdate() {
+        $id = Yii::$app->request->post('id',0);
+        if (empty($id))
+           throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => 'ID']));
+        $post = Yii::$app->request->post();
+        //判断名称
+        if (empty($post['name'])) {
+           throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => '分组名称']));
+        }
+
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $post['update_time'] = time();
+        unset($post['id']);
+        if ($model->load(['MembersGroup' => $post]) && $model->save()) {
+            return $this->redirect('index');
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            throw new NotFoundHttpException(Yii::t('yii','An internal server error occurred.'));
         }
     }
 
-    /**
-     * Deletes an existing MembersGroup model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+    //删除一条公众号
+    public function actionDelete() {
+        $id = Yii::$app->request->post('id');
+        if (!intval($id))
+           Error::output(Error::ERR_NOID);
+        if ($this->findModel($id)->delete()) {
+           Error::output(Error::SUCCESS);
+        }else{
+           Error::output(Error::ERR_FAIL);
+        }
     }
 
-    /**
-     * Finds the MembersGroup model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return MembersGroup the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
+    //加载模型
+    protected function findModel($id) {
         if (($model = MembersGroup::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('yii','Page not found.'));
         }
     }
 }
