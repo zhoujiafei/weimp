@@ -50,13 +50,13 @@ AppAsset::register($this);
     <!-- 左侧菜单栏 -->
 	<?php echo Menu::widget([
 	       'active' => !empty(Yii::$app->controller->id) ? Yii::$app->controller->id : null,
-	       'menus' => Yii::$app->params['admin_menus'],
+	       'menus' => Yii::$app->params['public_menus'],
 	]);?>
 	<!-- 左侧菜单栏 -->
 	
 	<div id="content">
 		<div id="content-header">
-			<h1>Dashboard</h1>
+			<h1><?= Yii::$app->controller->publicNumber['name'] ?></h1>
 			<div class="btn-group">
 				<a class="btn btn-large tip-bottom" title="Manage Files"><i class="icon-file"></i></a>
 				<a class="btn btn-large tip-bottom" title="Manage Users"><i class="icon-user"></i></a>

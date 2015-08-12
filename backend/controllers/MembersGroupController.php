@@ -5,14 +5,14 @@ use common\models\MembersGroup;
 use common\models\PublicNumber;
 use common\helpers\Out;
 use common\helpers\Common;
-use backend\base\BaseBackController;
+use backend\base\BaseBackPublicController;
 use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
 
 //用户分组控制器
-class MembersGroupController extends BaseBackController
+class MembersGroupController extends BaseBackPublicController
 {
     //操作类型控制
     public function behaviors() {

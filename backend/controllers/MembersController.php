@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Members;
-use backend\base\BaseBackController;
+use backend\base\BaseBackPublicController;
 use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -14,7 +14,7 @@ use yii\data\Pagination;
  * MembersController implements the CRUD actions for Members model.
  */
 //用户管理控制器
-class MembersController extends BaseBackController
+class MembersController extends BaseBackPublicController
 {
     //显示列表
     public function actionIndex() {

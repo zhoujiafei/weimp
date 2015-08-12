@@ -1,6 +1,5 @@
 <?php
 use yii\helpers\Url;
-$menus = Yii::$app->params['menus_config'];
 ?>
 <div id="sidebar">
 <?php if (!empty($menus)):?>

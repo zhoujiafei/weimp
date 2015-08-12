@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\assets\AppAsset;
+
 AppAsset::addCss($this,'@web/css/select2.css');
 AppAsset::addScript($this,'@web/js/jquery.uniform.js');
 AppAsset::addScript($this,'@web/js/select2.min.js');
@@ -50,7 +51,6 @@ $(document).ready(function(){
 					<div class="control-group">
 						<label class="control-label">头像</label>
 						<div class="controls">
-							<input type="text" value="<?= $headimgurl ?>" />
 							<img src="<?= $headimgurl ?>" style="width:80px;height:60px;"  />
 						</div>
 					</div>
