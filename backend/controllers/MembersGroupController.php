@@ -55,9 +55,11 @@ class MembersGroupController extends BaseBackController
     public function actionForm() {
         $id = Yii::$app->request->get('id');
         $model = null;
-        if (!empty($id))
-            $model = $this->findModel($id);
-        
+        $cur_public = null;//当前所属公众号信息
+        if (!empty($id)) {
+           $model = $this->findModel($id);
+           $cur_public = $model->publicNumber->attributes;
+        }
         //查询出当前系统存在的公众号
         $publicNumbers = PublicNumber::find()
                            ->orderBy(['order_id' => SORT_DESC]) //倒序排列
@@ -65,7 +67,8 @@ class MembersGroupController extends BaseBackController
                            ->all();
         return $this->render('form', [
             'model' => $model,
-            'public_numbers' => $publicNumbers
+            'public_numbers' => $publicNumbers,
+            'cur_public' => $cur_public
         ]);
     }
 

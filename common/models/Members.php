@@ -77,4 +77,10 @@ class Members extends \yii\db\ActiveRecord
     public function getPublicNumber() {
        return $this->hasOne(PublicNumber::className(),['id' => 'public_id']);
     }
+    
+    //获取所属的用户分组
+    public function getMemberGroup() {
+       return $this->hasOne(MembersGroup::className(),['group_id' => 'groupid','public_id' => 'public_id']);
+       
+    }
 }

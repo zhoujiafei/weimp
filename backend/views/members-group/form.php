@@ -63,7 +63,7 @@ $(document).ready(function(){
 					<div class="control-group">
 						<label class="control-label">所属公众号</label>
 						<div class="controls">
-							<input type="text" value="" readonly />
+							<input type="text" value="<?= $cur_public['name'] ?>" readonly />
 						</div>
 					</div>
 					<?php endif; ?>

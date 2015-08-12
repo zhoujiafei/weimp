@@ -4,118 +4,66 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Members;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use backend\base\BaseBackController;
+use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 /**
  * MembersController implements the CRUD actions for Members model.
  */
-class MembersController extends Controller
+//用户管理控制器
+class MembersController extends BaseBackController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Lists all Members models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Members::find(),
-        ]);
-
+    //显示列表
+    public function actionIndex() {
+        $query = Members::find();
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
+        $models = $query->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->orderBy(['order_id' => SORT_DESC]) //倒序排列
+                        ->all();
+        $data = [];
+        if (!empty($models)) {
+           foreach($models AS $k => $v) {
+               $data[$k] = $v->attributes;
+               $data[$k]['public_number_name'] = $v->publicNumber->name;
+               $data[$k]['subscribe_time_text'] = date('Y-m-d H:s',$v['subscribe_time']);
+               $data[$k]['is_subscribe_text'] = $v['subscribe'] ? '是' : '否';
+           }
+        }
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+              'models' => $data,
+              'pages' => $pages,
         ]);
     }
 
-    /**
-     * Displays a single Members model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+    //查看用户详情
+    public function actionForm() {
+        $id = Yii::$app->request->get('id');
+        $model = null;
+        $cur_public = null;
+        $member_group = null;
+        if (!empty($id)) {
+           $model = $this->findModel($id);
+           $cur_public = $model->publicNumber->attributes;
+           $member_group = $model->memberGroup->attributes;
+        }
+        return $this->render('form', [
+            'model' => $model,
+            'cur_public' => $cur_public,
+            'member_group' => $member_group
         ]);
     }
 
-    /**
-     * Creates a new Members model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Members();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing Members model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Members model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Members model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Members the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
+    //加载模型
+    protected function findModel($id) {
         if (($model = Members::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('yii','Page not found.'));
         }
     }
 }
