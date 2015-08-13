@@ -46,29 +46,9 @@ $(document).ready(function(){
 							<input type="text" placeholder="这里输入分组名称..." name="name" value="<?= $name ?>" />
 						</div>
 					</div>
-					<?php if($action == 'create'): ?>
-					<div class="control-group">
-						<label class="control-label">所属公众号</label>
-						<div class="controls">
-							<select name="public_id">
-							   <option value=0 />选择公众号
-							   <?php foreach ($public_numbers AS $k => $v): ?>
-							   <?php $selected = $v['id'] == $public_id ? 'selected="selected"' : '';?>
-								<option value=<?= $v['id'] ?> <?= $selected ?>/><?= $v['name'] ?>
-								<?php endforeach; ?>
-							</select>
-						</div>
-					</div>
-					<?php else: ?>
-					<div class="control-group">
-						<label class="control-label">所属公众号</label>
-						<div class="controls">
-							<input type="text" value="<?= $cur_public['name'] ?>" readonly />
-						</div>
-					</div>
-					<?php endif; ?>
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
+						<input type="hidden" name="pid" value="<?= Yii::$app->controller->pid ?>" />
 						<input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
 						<button type="submit" class="btn btn-primary"><?= $op_text;?></button>
 					</div>
