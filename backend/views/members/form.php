@@ -14,7 +14,7 @@ if(!empty($model)) {
 }
 $this->params = ['breadcrumb'  => [
                                     ['name' => '用户管理','url' => '#','current' => 0],
-                                    ['name' => '用户列表','url' => Url::to(['members/index']),'current' => 0],
+                                    ['name' => '用户列表','url' => Url::to(['members/index','pid' => Yii::$app->controller->pid]),'current' => 0],
                                     ['name' => '用户详情','url' => '#','current' => 1],
                                   ],
                 ];
