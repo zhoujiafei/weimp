@@ -18,7 +18,7 @@ class MembersController extends BaseBackPublicController
 {
     //显示列表
     public function actionIndex() {
-        $query = Members::find();
+        $query = Members::find()->where(['public_id' => $this->pid]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
         $models = $query->offset($pages->offset)
@@ -29,7 +29,6 @@ class MembersController extends BaseBackPublicController
         if (!empty($models)) {
            foreach($models AS $k => $v) {
                $data[$k] = $v->attributes;
-               $data[$k]['public_number_name'] = $v->publicNumber->name;
                $data[$k]['subscribe_time_text'] = date('Y-m-d H:s',$v['subscribe_time']);
                $data[$k]['is_subscribe_text'] = $v['subscribe'] ? '是' : '否';
            }
@@ -44,16 +43,13 @@ class MembersController extends BaseBackPublicController
     public function actionForm() {
         $id = Yii::$app->request->get('id');
         $model = null;
-        $cur_public = null;
         $member_group = null;
         if (!empty($id)) {
            $model = $this->findModel($id);
-           $cur_public = $model->publicNumber->attributes;
            $member_group = $model->memberGroup->attributes;
         }
         return $this->render('form', [
             'model' => $model,
-            'cur_public' => $cur_public,
             'member_group' => $member_group
         ]);
     }

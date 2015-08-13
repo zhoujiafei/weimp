@@ -46,7 +46,7 @@ $this->params = ['breadcrumb'  => [
 						<td><?= $v['is_subscribe_text'] ?></td>
 						<td><?= $v['subscribe_time_text'] ?></td>
 						<td>
-						   <a href="<?= Url::to(['members/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 查看</a>
+						   <a href="<?= Url::to(['members/form','id' => $v['id'],'pid' => Yii::$app->controller->pid]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 查看</a>
 						</td>
 					</tr>
 					<?php endforeach; ?>

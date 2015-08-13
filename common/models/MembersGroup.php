@@ -49,9 +49,4 @@ class MembersGroup extends \yii\db\ActiveRecord
             'order_id' => '排序ID',
         ];
     }
-    
-    //获取关联的公众号
-    public function getPublicNumber() {
-       return $this->hasOne(PublicNumber::className(),['id' => 'public_id']);
-    }
 }
