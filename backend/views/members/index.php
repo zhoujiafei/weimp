@@ -30,7 +30,6 @@ $this->params = ['breadcrumb'  => [
 					<tr>
 						<th><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" /></th>
 						<th>用户昵称</th>
-						<th>所属公众号</th>
 						<th>是否订阅</th>
 						<th>订阅时间</th>
 						<th>操作</th>
@@ -42,7 +41,6 @@ $this->params = ['breadcrumb'  => [
 					<tr id="tr_<?= $v['id'] ?>">
 						<td><input type="checkbox" /></td>
 						<td><?= $v['nickname'] ?></td>
-						<td><?= $v['public_number_name'] ?></td>
 						<td><?= $v['is_subscribe_text'] ?></td>
 						<td><?= $v['subscribe_time_text'] ?></td>
 						<td>
@@ -52,7 +50,7 @@ $this->params = ['breadcrumb'  => [
 					<?php endforeach; ?>
 					<?php else: ?>
 					<tr>
-					   <td colspan="6">
+					   <td colspan="5">
    					   <div class="alert alert-info" style="margin-top:22px;">
    							<button class="close" data-dismiss="alert">×</button>
    							<strong>友情提醒！</strong> 还没有人订阅您的公众号

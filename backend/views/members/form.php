@@ -51,6 +51,7 @@ $(document).ready(function(){
 					<div class="control-group">
 						<label class="control-label">性别</label>
 						<div class="controls">
+						   <?php $sex = ($sex == 1) ? '男' : '女'; ?>
 							<input type="text" value="<?= $sex ?>" />
 						</div>
 					</div>
