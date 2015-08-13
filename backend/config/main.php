@@ -37,6 +37,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => true,
         ],
+        'cache' => [
+            'class' => 'yii\caching\DbCache',
+        ],
     ],
     'params' => $params,
 ];

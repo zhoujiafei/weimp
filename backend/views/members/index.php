@@ -22,7 +22,7 @@ $this->params = ['breadcrumb'  => [
 			<span class="icon">
 				<i class="icon-th"></i>
 			</span>
-			<h5>订阅用户列表</h5>
+			<h5>用户列表</h5>
 		</div>
 		<div class="widget-content">
 			<table class="table table-bordered table-striped with-check">

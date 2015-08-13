@@ -15,7 +15,7 @@ use yii\helpers\Url;
             }
          ?>
    		<li class="submenu <?= $parent_active; ?>">
-   			<a href="#"><i class="icon icon-th-list"></i> <span><?= $v['name']; ?></span> <span class="label"><?= count($v['submenus']); ?></span></a>
+   			<a href="#"><i class="icon <?= $v['icon'];?>"></i> <span><?= $v['name']; ?></span> <span class="label"><?= count($v['submenus']); ?></span></a>
    			<ul <?php if(!empty($parent_active)): ?>style="display:block;" <?php endif;?>>
    			   <?php foreach ($v['submenus'] AS $kk => $vv): ?>
    			   <li class="<?php if($active == $vv['mark']): ?>active<?php endif; ?>"><a href="<?= Url::to($vv['url']); ?>"><?= $vv['name'] ?></a></li>
@@ -23,7 +23,7 @@ use yii\helpers\Url;
    			</ul>
    		</li>
      <?php else: ?>
-     	<li class="<?php if($active == $v['mark']): ?>active<?php endif; ?>"><a href="<?= Url::to($v['url']); ?>"><i class="icon icon-home"></i> <span><?= $v['name']; ?></span></a></li>
+     	<li class="<?php if($active == $v['mark']): ?>active<?php endif; ?>"><a href="<?= Url::to($v['url']); ?>"><i class="icon <?= $v['icon'];?>"></i> <span><?= $v['name']; ?></span></a></li>
      <?php endif; ?>
   <?php endforeach; ?>
   </ul>

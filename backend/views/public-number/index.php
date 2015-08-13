@@ -46,7 +46,7 @@ $this->params = ['breadcrumb'  => [['name' => '公众号设置','url' => '#','cu
 						<td>
 						   <a href="<?= Url::to(['public-number/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
 						   <a href="javascript:void(0);" _id=<?= $v['id'] ?> class="btn btn-danger remove-row"><i class="icon-remove icon-white"></i> 删除</a>
-						   <a href="<?= Url::to(['public-admin/index','unique_id' => $v['unique_id']]);?>" class="btn btn-success"><i class="icon-briefcase icon-white"></i> 功能管理</a>
+						   <a href="<?= Url::to(['public-admin/index','pid' => $v['id']]);?>" class="btn btn-success"><i class="icon-briefcase icon-white"></i> 功能管理</a>
 						</td>
 					</tr>
 					<?php endforeach; ?>

@@ -23,7 +23,7 @@ $this->params = ['breadcrumb'  => [
 			<span class="icon">
 				<i class="icon-th"></i>
 			</span>
-			<h5>公众号列表</h5>
+			<h5>用户分组列表</h5>
 			<a class="btn btn-info label" href="<?= Url::to(['members-group/form']);?>">创建</a>
 		</div>
 		<div class="widget-content">

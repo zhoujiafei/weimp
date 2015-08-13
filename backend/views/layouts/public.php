@@ -50,7 +50,7 @@ AppAsset::register($this);
     <!-- 左侧菜单栏 -->
 	<?php echo Menu::widget([
 	       'active' => !empty(Yii::$app->controller->id) ? Yii::$app->controller->id : null,
-	       'menus' => Yii::$app->params['public_menus'],
+	       'menus' => Yii::$app->controller->menus,
 	]);?>
 	<!-- 左侧菜单栏 -->
 	
