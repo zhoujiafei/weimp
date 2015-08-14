@@ -40,4 +40,17 @@ class AdminController extends BaseBackController
         Yii::$app->user->logout();
         return $this->goHome();
     }
+
+    public function actions()
+    {
+       return [
+           'upload' => [
+               'class' => 'kucha\ueditor\UEditorAction',
+               'config' => [
+                   "imageUrlPrefix"  => "http://localhost/",//图片访问路径前缀
+                   "imagePathFormat" => Yii::$app->params['upload_path'] . "image/{yyyy}{mm}{dd}/{time}{rand:6}" //上传保存路径
+               ],
+           ]
+       ];
+    }
 }
