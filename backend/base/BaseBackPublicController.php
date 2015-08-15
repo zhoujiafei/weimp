@@ -98,6 +98,6 @@ class BaseBackPublicController extends BaseBackController
             		                   ]
            ]);
        }
-       throw new NotFoundHttpException(Yii::t('yii','未选取公众号1111'));
+       throw new NotFoundHttpException(Yii::t('yii','未选取公众号'));
     }
 }

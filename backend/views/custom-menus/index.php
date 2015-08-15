@@ -41,12 +41,11 @@ $this->params = ['breadcrumb'  => [['name' => '自定义菜单设置','url' => '
 						<td><input type="checkbox" /></td>
 						<td><?= $v['title'] ?></td>
 						<td><?= $v['type'] ?></td>
-						<td><?= $v['fid'] ?></td>
+						<td><?= $v['level'] ?></td>
 						<td><?= $v['keyword'] ?></td>
 						<td>
-						   <a href="<?= Url::to(['custom-menus/form','id' => $v['id']]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
+						   <a href="<?= Url::to(['custom-menus/form','id' => $v['id'],'pid' => Yii::$app->controller->pid]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
 						   <a href="javascript:void(0);" _id=<?= $v['id'] ?> class="btn btn-danger remove-row"><i class="icon-remove icon-white"></i> 删除</a>
-						   <a href="<?= Url::to(['custom-menus/index','pid' => $v['id']]);?>" class="btn btn-success"><i class="icon-briefcase icon-white"></i> 功能管理</a>
 						</td>
 					</tr>
 					<?php endforeach; ?>
@@ -70,7 +69,7 @@ $this->params = ['breadcrumb'  => [['name' => '自定义菜单设置','url' => '
 						</div>
       			</div>
 			</div>
-			<input type="hidden" class="delete-action" value="<?= Url::to(['custom-menus/delete']);?>" />
+			<input type="hidden" class="delete-action" value="<?= Url::to(['custom-menus/delete','pid' => Yii::$app->controller->pid]);?>" />
 			<input type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
 		</div>
 	</div>

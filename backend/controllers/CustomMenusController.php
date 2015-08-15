@@ -7,6 +7,7 @@ use common\models\CustomMenus;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
+use backend\helpers\Error;
 
 //自定义菜单控制器
 class CustomMenusController extends BaseBackPublicController
@@ -38,6 +39,7 @@ class CustomMenusController extends BaseBackPublicController
         if (!empty($models)) {
            foreach($models AS $k => $v) {
                $data[$k] = $v->attributes;
+               $data[$k]['level'] = intval($v['fid']) == 0 ? '一级菜单' : '二级菜单';
            }
         }
         return $this->render('index', [
@@ -50,13 +52,15 @@ class CustomMenusController extends BaseBackPublicController
     public function actionForm() {
         $id = Yii::$app->request->get('id');
         $model = null;
-        if (!empty($id)) {
+        $firstMenus = [];
+        if (!empty($id))
            $model = $this->findModel($id);
-           $firstMenus = CustomMenus::find()
+        
+        //取出所有一级菜单
+        $firstMenus = CustomMenus::find()
                            ->where(['public_id' => $this->pid, 'fid' => 0])
                            ->asArray()
                            ->all();
-        }
         return $this->render('form', [
             'model' => $model,
             'first_menus' => $firstMenus
@@ -86,7 +90,7 @@ class CustomMenusController extends BaseBackPublicController
     }
 
     //更新菜单
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
         $id = Yii::$app->request->post('id',0);
         if (empty($id))
@@ -110,7 +114,7 @@ class CustomMenusController extends BaseBackPublicController
     }
 
     //删除菜单
-    public function actionDelete($id)
+    public function actionDelete()
     {
         $id = Yii::$app->request->post('id');
         if (!intval($id))
