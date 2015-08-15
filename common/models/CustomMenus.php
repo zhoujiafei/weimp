@@ -32,7 +32,7 @@ class CustomMenus extends \yii\db\ActiveRecord
     {
         return [
             [['title'], 'required'],
-            [['pid', 'order_id'], 'integer'],
+            [['pid', 'order_id', 'public_id','create_time','update_time'], 'integer'],
             [['url'], 'string', 'max' => 255],
             [['keyword'], 'string', 'max' => 100],
             [['title'], 'string', 'max' => 50],
