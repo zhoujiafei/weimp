@@ -38,4 +38,9 @@ class CustomMenus extends \yii\db\ActiveRecord
             [['type'], 'string', 'max' => 30]
         ];
     }
+    
+    //获取父级菜单信息
+    public function getParentMenu() {
+       return $this->hasOne(CustomMenus::className(), ['id' => 'fid']);
+    }
 }

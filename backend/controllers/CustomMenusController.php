@@ -39,6 +39,7 @@ class CustomMenusController extends BaseBackPublicController
         if (!empty($models)) {
            foreach($models AS $k => $v) {
                $data[$k] = $v->attributes;
+               $data[$k]['parent'] = empty($v->parentMenu) ? '无' : $v->parentMenu->title;
                $data[$k]['level'] = intval($v['fid']) == 0 ? '一级菜单' : '二级菜单';
            }
         }

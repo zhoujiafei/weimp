@@ -30,6 +30,7 @@ $this->params = ['breadcrumb'  => [['name' => '自定义菜单设置','url' => '
 						<th>菜单名</th>
 						<th>菜单类型</th>
 						<th>菜单级别</th>
+						<th>所属菜单</th>
 						<th>菜单关键字</th>
 						<th>操作</th>
 					</tr>
@@ -42,6 +43,7 @@ $this->params = ['breadcrumb'  => [['name' => '自定义菜单设置','url' => '
 						<td><?= $v['title'] ?></td>
 						<td><?= $v['type'] ?></td>
 						<td><?= $v['level'] ?></td>
+						<td><?= $v['parent'] ?></td>
 						<td><?= $v['keyword'] ?></td>
 						<td>
 						   <a href="<?= Url::to(['custom-menus/form','id' => $v['id'],'pid' => Yii::$app->controller->pid]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 编辑</a>
@@ -51,7 +53,7 @@ $this->params = ['breadcrumb'  => [['name' => '自定义菜单设置','url' => '
 					<?php endforeach; ?>
 					<?php else: ?>
 					<tr>
-					   <td colspan="6">
+					   <td colspan="7">
    					   <div class="alert alert-info" style="margin-top:22px;">
    							<button class="close" data-dismiss="alert">×</button>
    							<strong>友情提醒！</strong> 您还未创建一个菜单！
@@ -63,7 +65,10 @@ $this->params = ['breadcrumb'  => [['name' => '自定义菜单设置','url' => '
 				</tbody>
 			</table>
 			<div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
-      			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
+   			   <div class="dataTables_filter" style="margin-top:-4px;margin-left: 14px;">
+      			   <button class="btn btn-success">同步线上菜单</button>
+      			</div>
+      			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" style="height:22px;">
          			<div class="pagination alternate">
 						<?php echo LinkPager::widget(['pagination' => $pages]);?>
 						</div>
