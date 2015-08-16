@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 //自定义菜单控制器
 class CustomMenusController extends BaseBackPublicController
 {
+    private $menuTypes = ['click','view','scancode_push','scancode_waitmsg','pic_sysphoto','pic_photo_or_album','pic_weixin','location_select','media_id','view_limited'];
     //操作类型控制
     public function behaviors() {
         return [
@@ -89,10 +90,12 @@ class CustomMenusController extends BaseBackPublicController
     public function actionCreate() {
         $post = Yii::$app->request->post();
         //判断名称
-        if (empty($post['title'])) {
+        if (empty($post['title']))
            throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => '菜单名称']));
-        }
-        
+        $post['type'] = trim($post['type']);
+        if (!empty($post['type']) && !in_array($post['type'],$this->menuTypes))
+           throw new NotFoundHttpException(Yii::t('yii','请填写正确的类型，必须在[' . implode(',',$this->menuTypes) . ']中选择一种'));
+
         //获取传递过来的所属的父级ID
         $fid = !empty($post['fid']) ? intval($post['fid']) : 0;
         //获取最大允许的菜单数（自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单）
@@ -127,9 +130,12 @@ class CustomMenusController extends BaseBackPublicController
         if (empty($id))
            throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => 'ID']));
         //判断名称
-        if (empty($post['title'])) {
+        if (empty($post['title']))
            throw new NotFoundHttpException(Yii::t('yii','Missing required parameters: {params}',['params' => '菜单名称']));
-        }
+
+        $post['type'] = trim($post['type']);
+        if (!empty($post['type']) && !in_array($post['type'],$this->menuTypes))
+           throw new NotFoundHttpException(Yii::t('yii','请填写正确的类型，必须在[' . implode(',',$this->menuTypes) . ']中选择一种'));
 
         //用户名处理一下
         $post['title'] = trim($post['title']);
@@ -179,7 +185,12 @@ class CustomMenusController extends BaseBackPublicController
       //构造菜单结构体
       $buttons = [];
       foreach ($menus AS $k => $v) {
-         $item = ['name' => $v['title'],'type' => $v['type'],'key' => $v['keyword'],'url' => $v['url']];
+         $item = ['name' => $v['title'],'type' => $v['type']];
+         if ($v['type'] == 'view') {
+            $item['url'] = $v['url'];
+         }else{
+            $item['key'] = $v['keyword'];
+         }
          if (!empty($v['fid'])) {
             $buttons[$v['fid']]['sub_button'][] = $item;
          }else{
@@ -192,7 +203,6 @@ class CustomMenusController extends BaseBackPublicController
          if (array_key_exists('sub_button',$v) && !empty($v['sub_button']))
             unset($v['type'],$v['key'],$v['url']);
       }
-      
       //提交到微信接口同步
       $ret = $this->wechat->createMenu(['button' => array_values($buttons)]);
       if ($ret === false)

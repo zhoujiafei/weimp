@@ -8,6 +8,7 @@ AppAsset::addScript($this,'@web/js/select2.min.js');
 AppAsset::addScript($this,'@web/js/unicorn.js');
 AppAsset::addScript($this,'@web/js/jquery.dataTables.min.js');
 AppAsset::addScript($this,'@web/js/unicorn.tables.js');
+AppAsset::addScript($this,'@web/js/custom-menus/custommenus.js');
 
 $fid = intval(Yii::$app->request->get('fid',0));
 if ($fid) {
@@ -82,14 +83,40 @@ if ($fid) {
 			</table>
 			<div class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
    			   <div class="dataTables_filter" style="margin-top:-4px;margin-left: 14px;">
-      			   <button class="btn btn-success">同步线上菜单</button>
+      			   <button class="btn btn-success" id="sycn-menus">同步线上菜单</button>
       			</div>
       			<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" style="height:22px;"></div>
 			</div>
 			<input type="hidden" class="delete-action" value="<?= Url::to(['custom-menus/delete','pid' => Yii::$app->controller->pid]);?>" />
+			<input type="hidden" class="sync-menus-action" value="<?= Url::to(['custom-menus/sync-menus','pid' => Yii::$app->controller->pid]);?>" />
 			<input type="hidden" id="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
 		</div>
 	</div>
 </div>
+</div>
+<div class="modal fade" id="SyncMenusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">同步确认</h4>
+      </div>
+      <div class="modal-body">
+        您确定要同步菜单吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary confirm-sync-menus" >确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="alert alert-success" id="SyncSuccess" style="display:none;">
+	<button class="close" data-dismiss="alert">×</button>
+	<strong>同步成功!</strong>
+</div>
+<div class="alert alert-error" id="SyncFail" style="display:none;">
+	<button class="close" data-dismiss="alert">×</button>
+	<strong>同步失败!</strong> <strong class="error-msg"><strong>
 </div>
 <?php echo Delete::widget();?>
