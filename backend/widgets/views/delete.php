@@ -23,7 +23,7 @@
 
 <div class="alert alert-error" id="AlertFail" style="display:none;">
 	<button class="close" data-dismiss="alert">×</button>
-	<strong>删除失败!</strong> 抱歉，删除失败！
+	<strong>删除失败!</strong> <strong class="error-msg">抱歉，删除失败！<strong>
 </div>
 <script>
 $(document).ready(function(){
@@ -44,14 +44,15 @@ $(document).ready(function(){
          success: function(obj){
             var obj = eval('(' + obj + ')');
             if (parseInt(obj.errorCode) == 0) {
-               $('#AlertSuccess').fadeIn(2000,function(){
-                  $(this).fadeOut('slow',function(){
+               $('#AlertSuccess').fadeIn('fast',function(){
+                  $(this).fadeOut(2000,function(){
                      $('#tr_' + id).remove();
                   });
                });
             }else{
-               $('#AlertFail').fadeIn(2000,function(){
-                  $(this).fadeOut('slow');
+               $('#AlertFail .error-msg').text(obj.errorText);
+               $('#AlertFail').fadeIn('fast',function(){
+                  $(this).fadeOut(6000);
                })
             }
          },

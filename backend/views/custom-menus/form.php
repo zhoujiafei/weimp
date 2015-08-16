@@ -16,19 +16,23 @@ if(!empty($model)) {
     $action = 'create';
     $op_text = '创建';
 }
-$this->params = ['breadcrumb'  => [
-                                    ['name' => '菜单管理','url' => '#','current' => 0],
-                                    ['name' => '自定义菜单','url' => Url::to(['custom-menus/index','pid' => Yii::$app->controller->pid]),'current' => 0],
-                                    ['name' => $op_text . '菜单','url' => '#','current' => 1]
-                                  ],
-                ];
+
+$fid = intval(Yii::$app->request->get('fid',0));
+if (!empty($fid)) {
+   $this->params = ['breadcrumb'  => [
+                                       ['name' => '一级菜单【' . $parent_menu['title'] . '】','url' => Url::to(['custom-menus/index','pid' => Yii::$app->controller->pid]),'current' => 0],
+                                       ['name' => '二级菜单','url' => Url::to(['custom-menus/index','pid' => Yii::$app->controller->pid,'fid' => $fid]),'current' => 0],
+                                       ['name' => $op_text . '菜单','url' => '#','current' => 1]
+                                     ]
+                   ];
+}else{
+   $this->params = ['breadcrumb'  => [
+                                       ['name' => '一级菜单','url' => Url::to(['custom-menus/index','pid' => Yii::$app->controller->pid,]),'current' => 0],
+                                       ['name' => $op_text . '菜单','url' => '#','current' => 1]
+                                     ]
+                   ];
+}
 ?>
-<script>
-$(document).ready(function(){
-	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
-	$('select').select2();
-});
-</script>
 <div class="row-fluid">
 	<div class="span12">
 		<div class="widget-box">
@@ -47,20 +51,12 @@ $(document).ready(function(){
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label">选择父级菜单</label>
+						<label class="control-label">所属父级菜单</label>
 						<div class="controls">
-							<select name="fid">
-							   <option value=0 />一级菜单
-							   <?php if (!empty($first_menus)): ?>
-							   <?php foreach ($first_menus AS $k => $v): ?>
-							   <?php $selected = $v['id'] == $fid ? 'selected="selected"' : '';?>
-								<option value=<?= $v['id'] ?> <?= $selected ?>/><?= $v['title'] ?>
-								<?php endforeach; ?>
-								<?php endif; ?>
-							</select>
+						   <?php $parent_menu_title = !empty($parent_menu) ? $parent_menu['title'] : '无';?>
+							<input type="text" readonly value="<?= $parent_menu_title ?>" />
 						</div>
 					</div>
-
 					<div class="control-group">
 						<label class="control-label">菜单类型</label>
 						<div class="controls">
@@ -81,6 +77,7 @@ $(document).ready(function(){
 					</div>
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
+						<input type="hidden" name="fid" value="<?= $fid ?>" />
 						<input type="hidden" name="pid" value="<?= Yii::$app->controller->pid ?>" />
 						<input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
 						<button type="submit" class="btn btn-primary"><?= $op_text;?></button>
