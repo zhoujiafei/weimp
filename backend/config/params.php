@@ -23,8 +23,8 @@ return [
                ['name' => '用户信息','url' => ['members/index'],'mark' => 'members'],
          ]],
          ['name' => '素材管理','url' => '#','mark' => 'material','icon' => 'icon-file','submenus' => [
-               ['name' => '临时素材','url' => ['material-tmp/index'],'mark' => 'tmp-material'],
-               ['name' => '永久素材','url' => ['material-forever/index'],'mark' => 'material-forever'],
+               ['name' => '临时素材','url' => ['tmp-material/index'],'mark' => 'tmp-material'],
+               ['name' => '永久素材','url' => ['forever-material/index'],'mark' => 'forever-material'],
          ]],
          /*
          ['name' => '客服管理','url'  => ['custom-service/index'],'mark' => 'custom-service'],
