@@ -1,1 +1,5 @@
-这是素材详情
+<?php
+
+
+echo Yii::$app->request->csrfToken;
+

@@ -30,8 +30,8 @@ class TmpMaterial extends \yii\db\ActiveRecord
     {
         return [
             [['type', 'media_id'], 'required'],
-            [['create_time', 'order_id'], 'integer'],
-            [['type'], 'string', 'max' => 20],
+            [['create_time', 'order_id','public_id'], 'integer'],
+            [['type','name'], 'string', 'max' => 20],
             [['media_id'], 'string', 'max' => 60]
         ];
     }
