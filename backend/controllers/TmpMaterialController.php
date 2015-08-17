@@ -66,6 +66,7 @@ class TmpMaterialController extends BaseBackPublicController
         }
         return $this->render('form', [
             'model' => $model,
+            'material_types' => $this->tmpMaterialTypes
         ]);
     }
 
