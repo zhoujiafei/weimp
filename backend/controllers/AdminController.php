@@ -48,7 +48,7 @@ class AdminController extends BaseBackController
                'class' => 'kucha\ueditor\UEditorAction',
                'config' => [
                    "imageUrlPrefix"  => "http://localhost/",//图片访问路径前缀
-                   "imagePathFormat" => Yii::$app->params['upload_path'] . "image/{yyyy}{mm}{dd}/{time}{rand:6}" //上传保存路径
+                   "imagePathFormat" => Yii::$app->params['upload_path'] . "ueditorimage/{yyyy}{mm}{dd}/{time}{rand:6}" //上传保存路径
                ],
            ]
        ];
