@@ -36,7 +36,14 @@ class Uploader extends Component
    //单文件上传
    public function uploadFile() {
       //上传之前触发的事件
-      $this->trigger(self::EVENT_BEFORE_REQUEST);
+      $this->trigger(self::EVENT_BEFORE_UPLOAD);
+      //做好上传之前的准备工作，创建目录结构
+      
+      
+      
+      
+      
+      
       
       
       
@@ -47,11 +54,32 @@ class Uploader extends Component
    //多文件上传
    public function uplaodFiles() {
       //上传之前触发的事件
-      $this->trigger(self::EVENT_BEFORE_REQUEST);
+      $this->trigger(self::EVENT_BEFORE_UPLOAD);
       
       
       
       //上传之后触发的事件
       $this->trigger(self::EVENT_AFTER_UPLOAD);
    }
+   
+   //创建目录结构
+   private function createSaveDir() {
+      
+      
+      
+   }
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 }
