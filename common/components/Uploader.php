@@ -44,6 +44,8 @@ class Uploader extends Component
 
 	//上传所有文件
 	public function uploadAll($savePath='') {
+	   //直接传参支持别名
+	   $savePath = Yii::getAlias($savePath);
 		if(empty($savePath))
 			$savePath=$this->savePath;
 		$savePath=rtrim($savePath,'/').'/';
@@ -99,6 +101,8 @@ class Uploader extends Component
 	 * 通过指定文件的$_FILES['name']上传文件 
 	 */
 	public function upload($file,$savePath=''){
+	   //直接传参支持别名
+	   $savePath = Yii::getAlias($savePath);
 		//如果不指定保存文件名，则由系统默认
 		if(empty($savePath))
 			$savePath = $this->savePath;
