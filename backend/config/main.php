@@ -40,6 +40,10 @@ return [
         'cache' => [
             'class' => 'yii\caching\DbCache',
         ],
+        'request' => [
+        	'class' => 'yii\web\Request',
+            'enableCsrfValidation' => false,
+        ],
     ],
     'params' => $params,
 ];

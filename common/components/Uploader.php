@@ -3,77 +3,15 @@ namespace common\components;
 
 use Yii;
 use yii\base\Component;
-use yii\
 
 class Uploader extends Component
 {
    //允许的扩展名
 	public $allowExts = [];
 	//允许的文件MIME类型
-	public $allowTypes = ["application/rar",
-                         "application/x-rar-compressed",
-                         "application/arj",
-                         "application/excel",
-                         "application/gnutar",
-                         "application/octet-stream",
-                         "application/pdf",
-                         "application/powerpoint",
-                         "application/postscript",
-                         "application/plain",
-                         "application/rtf",
-                         "application/vocaltec-media-file",
-                         "application/wordperfect",
-                         "application/x-bzip",
-                         "application/x-bzip2",
-                         "application/x-compressed",
-                         "application/x-excel",
-                         "application/x-gzip",
-                         "application/x-latex",
-                         "application/x-midi",
-                         "application/x-msexcel",
-                         "application/x-rtf",
-                         "application/x-sit",
-                         "application/x-stuffit",
-                         "application/x-shockwave-flash",
-                         "application/x-troff-msvideo",
-                         "application/x-zip-compressed",
-                         "application/x-mht",
-                         "application/xml",
-                         "application/zip",
-                         "application/msword",
-                         "application/mspowerpoint",
-                         "application/vnd.ms-excel",
-                         "application/vnd.ms-powerpoint",
-                         "application/vnd.ms-word",
-                         "application/vnd.ms-word.document.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                         "application/vnd.ms-word.template.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
-                         "application/vnd.ms-powerpoint.template.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.presentationml.template",
-                         "application/vnd.ms-powerpoint.addin.macroEnabled.12",
-                         "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-                         "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                         "application/vnd.ms-excel.addin.macroEnabled.12",
-                         "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-                         "application/vnd.ms-excel.sheet.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                         "application/vnd.ms-excel.template.macroEnabled.12",
-                         "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-                         "audio/*",
-                         "image/*",
-                         "video/*",
-                         "multipart/x-zip",
-                         "multipart/x-gzip",
-                         "message/rfc822", 
-                         "multipart/related", 
-                         "text/richtext",
-                         "text/plain",
-                         "text/xml"];
+	public $allowTypes = [];
 	//文件保存路径（默认当前目的upload目录）
-	public $savePath = './uplaod/';
+	private $savePath = './uplaod/';
 	//最大上传大小 默认最大上传 2M =2097152 B
 	public $maxSize = 2097152;
 	//自动检测文件 默认开启
@@ -85,7 +23,26 @@ class Uploader extends Component
 	//最近一次的错误 
 	private $error = '';
 	
-	//上传文件
+	//获取保存路径
+	public function getSavePath()
+	{
+		return $this->savePath;
+	}
+	
+	//设置保存路径
+	public function setSavePath($path = '')
+	{
+		if(is_dir($path))
+		{
+			$this->savePath = $path;
+		}
+		else if($_path = Yii::getAlias($path))//解析别名路径
+		{
+			$this->savePath = $_path;
+		}
+	}
+
+	//上传所有文件
 	public function uploadAll($savePath='') {
 		if(empty($savePath))
 			$savePath=$this->savePath;
@@ -149,8 +106,8 @@ class Uploader extends Component
 		// 检查上传目录
 		if(!is_dir($savePath)) {
 			// 尝试创建目录
-			if(!mk_dir($savePath)){
-				$this->error  =  '上传目录'.$savePath.'不存在';
+			if(!mkdir($savePath, 0777, true)){
+				$this->error = '上传目录'.$savePath.'不存在';
 				return false;
 			}
 		}else {
@@ -220,6 +177,30 @@ class Uploader extends Component
 			}
 		}
 		return $fileArray;
+	}
+	
+	/**
+	 * 保存一个文件
+	 * 
+	 */
+	private function save($file){
+		$filename = $file['savepath'].$file['savename'];
+		if(!$this->uploadReplace && is_file($filename)) {
+			// 不覆盖同名文件
+			$this->error	=	'文件已经存在！'.$filename;
+			return false;
+		}
+		// 如果是图像文件 检测文件格式
+		if( in_array(strtolower($file['extension']),array('gif','jpg','jpeg','bmp','png','swf')) && false === getimagesize($file['tmp_name'])) {
+			$this->error = '非法图像文件';
+			return false;
+		}
+		//上传文件
+		if(!move_uploaded_file($file['tmp_name'], $filename)) {
+			$this->error = '文件上传保存错误！';
+			return false;
+		}
+		return true;
 	}
 
 	/**

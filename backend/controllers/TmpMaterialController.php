@@ -126,6 +126,28 @@ class TmpMaterialController extends BaseBackPublicController
        return ['media_id' => 'zhoudsdscds'];
        
     }
+    
+    public function actionUpload() {
+       $uploader = Yii::createObject([
+                        'class' => 'common\components\Uploader',
+                        'savepath' => '@upload/12131/',
+                 ]);
+       
+       $ret = $uploader->upload($_FILES['file']);
+       if ($ret === false) {
+          echo $uploader->errorMsg;
+       }else{
+          print_r($uploader->UploadFileInfo);
+       }
+       
+       
+       
+       
+       
+       
+       
+       
+    }
 
     //删除临时素材（此处提供的删除只是软删除，只是把数据库保存的关联记录删除掉，实际上每个临时素材最多在微信服务器上保存3天时间，自动会被删除）
     public function actionDelete()
