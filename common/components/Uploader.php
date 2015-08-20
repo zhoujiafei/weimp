@@ -3,6 +3,7 @@ namespace common\components;
 
 use Yii;
 use yii\base\Component;
+use common\helpers\Common;
 
 class Uploader extends Component
 {
@@ -48,7 +49,7 @@ class Uploader extends Component
 	   $savePath = Yii::getAlias($savePath);
 		if(empty($savePath))
 			$savePath=$this->savePath;
-		$savePath=rtrim($savePath,'/').'/';
+		$savePath=rtrim($savePath,'/') . '/' . $this->getSecondPath();
 		if(!is_dir($savePath)){
 			//目录不存在则尝试创建
 			if(!mkdir($savePath, 0777, true)){
@@ -106,7 +107,7 @@ class Uploader extends Component
 		//如果不指定保存文件名，则由系统默认
 		if(empty($savePath))
 			$savePath = $this->savePath;
-		$savePath=rtrim($savePath,'/').'/';
+		$savePath=rtrim($savePath,'/') .'/' . $this->getSecondPath();
 		// 检查上传目录
 		if(!is_dir($savePath)) {
 			// 尝试创建目录
@@ -188,7 +189,7 @@ class Uploader extends Component
 	 * 
 	 */
 	private function save($file){
-		$filename = $file['savepath'].$file['savename'];
+		$filename = $file['savepath'] . $file['savename'];
 		if(!$this->uploadReplace && is_file($filename)) {
 			// 不覆盖同名文件
 			$this->error	=	'文件已经存在！'.$filename;
@@ -219,8 +220,15 @@ class Uploader extends Component
 	 * 文件命名 规则
 	 */
 	private function getSaveName($file){
-		$saveName = md5(uniqid()).'.'.$file['extension'];
+		$saveName = md5(uniqid() . Common::getGenerateSalt()).'.'.$file['extension'];
 		return $saveName;
+	}
+
+	/**
+	 * 获取二级目录路径
+	 */
+	private function getSecondPath() {
+	    return date('Y',time()) . DIRECTORY_SEPARATOR . date('m',time()) . DIRECTORY_SEPARATOR;
 	}
 
 	/**
