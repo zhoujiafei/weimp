@@ -49,6 +49,12 @@ $(document).ready(function(){
 							</select>
 						</div>
 					</div>
+					<div class="control-group">
+						<label class="control-label">上传文件</label>
+						<div class="controls">
+							<input type="file" name="file" />
+						</div>
+					</div>
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
 						<input type="hidden" name="pid" value="<?= Yii::$app->controller->pid ?>" />
