@@ -132,7 +132,6 @@ class TmpMaterialController extends BaseBackPublicController
                         'class' => 'common\components\Uploader',
                         'savepath' => '@upload/images/',
                  ]);
-       
        $ret = $uploader->upload($_FILES['file']);
        if ($ret === false) {
           echo $uploader->errorMsg;
