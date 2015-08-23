@@ -82,8 +82,7 @@ class TmpMaterialController extends BaseBackPublicController
         
         //获取POST数据
         $post = Yii::$app->request->post();
-        $action = 'create' . ucfirst($type);
-        $ret = $this->$action($post);
+        $ret = $this->upload($post);
         if ($ret === false)
            throw new NotFoundHttpException(Yii::t('yii','创建临时素材失败'));
 
@@ -100,44 +99,34 @@ class TmpMaterialController extends BaseBackPublicController
         }
     }
 
-    //创建图片（image）素材
-    private function createImage($post = []) {
-       
-       return ['media_id' => 'zhoudsdscds'];
-       
-    }
-
-    //创建语音（voice）素材
-    private function createVoice($post = []) {
-       
-       return ['media_id' => 'zhoudsdscds'];
-    }
-
-    //创建视频（video）素材
-    private function createVideo($post = []) {
-       
-       return ['media_id' => 'zhoudsdscds'];
-       
-    }
-
-    //创建缩略图（缩略图）素材
-    private function createThumb($post = []) {
-       
-       return ['media_id' => 'zhoudsdscds'];
-       
-    }
+    //执行上传
+    private function upload($post = []) {
+        if (empty($post) || empty($_FILES['FileData']))
+            return false;
+        //实例化上传组件
+        $uploader = Yii::createObject([
+                'class' => 'common\components\Uploader',
+                'savepath' => '@upload/' .$post['type']. '/',
+        ]);
+        //执行上传
+        $ret = $uploader->upload($_FILES['FileData']);
+        if ($ret === false)
+           return false;  
+        //用返回的信息拼接图片路径，将图片上传到
+        
+           
+           
+           
+           
+        return ['media_id' => 'zhouxingxing'];
+        
+        
+        
+        
+        
+        
+        
     
-    public function actionUpload() {
-       $uploader = Yii::createObject([
-                        'class' => 'common\components\Uploader',
-                        'savepath' => '@upload/images/',
-                 ]);
-       $ret = $uploader->upload($_FILES['file']);
-       if ($ret === false) {
-          echo $uploader->errorMsg;
-       }else{
-          print_r($uploader->UploadFileInfo);
-       }
     }
 
     //删除临时素材（此处提供的删除只是软删除，只是把数据库保存的关联记录删除掉，实际上每个临时素材最多在微信服务器上保存3天时间，自动会被删除）
