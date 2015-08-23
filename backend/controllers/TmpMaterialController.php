@@ -21,6 +21,8 @@ class TmpMaterialController extends BaseBackPublicController
 {
     private $tmpMaterialTypes = ['image','voice','video','thumb'];
     private $tmpMaterialSizes = ['image' => 1024,'voice' => 2048,'video' => 10240,'thumb' => 64];
+    private $allowTypes = ['image' => ['jpg','jpeg'],'voice' => ['amr','mp3'],'video' => ['mp4'],'thumb' => ['jpeg','jpg']];
+    
     public function behaviors()
     {
         return [
@@ -106,27 +108,20 @@ class TmpMaterialController extends BaseBackPublicController
         //实例化上传组件
         $uploader = Yii::createObject([
                 'class' => 'common\components\Uploader',
-                'savepath' => '@upload/' .$post['type']. '/',
+                'savePath' => '@upload/' .$post['type']. '/',
+                'allowExts' => $this->allowTypes[$post['type']],//暂时用扩展来判断类型
         ]);
         //执行上传
         $ret = $uploader->upload($_FILES['FileData']);
-        if ($ret === false)
-           return false;  
+        if ($ret === false) {
+            return false;
+        }
         //用返回的信息拼接图片路径，将图片上传到
         
            
-           
-           
-           
+        
+        
         return ['media_id' => 'zhouxingxing'];
-        
-        
-        
-        
-        
-        
-        
-    
     }
 
     //删除临时素材（此处提供的删除只是软删除，只是把数据库保存的关联记录删除掉，实际上每个临时素材最多在微信服务器上保存3天时间，自动会被删除）

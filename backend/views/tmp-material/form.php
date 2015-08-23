@@ -18,6 +18,7 @@ $this->params = ['breadcrumb'  => [
 ?>
 <script>
 $(document).ready(function(){
+	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	$('select').select2();
 });
 </script>
@@ -41,7 +42,7 @@ $(document).ready(function(){
 					<div class="control-group">
 						<label class="control-label">选择类型</label>
 						<div class="controls">
-							<select name="type">
+							<select name="type" id="material_type_selector">
 							   <option value="notype" /> 选择素材类型
 							   <?php foreach ($material_types AS $v): ?>
 								<option value="<?= $v ?>" /><?= $v ?>
@@ -52,9 +53,10 @@ $(document).ready(function(){
 					<div class="control-group">
 						<label class="control-label">上传文件</label>
 						<div class="controls">
-							<input type="file" name="file" />
+							<input type="file" name="FileData" />
 						</div>
 					</div>
+					
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
 						<input type="hidden" name="pid" value="<?= Yii::$app->controller->pid ?>" />
