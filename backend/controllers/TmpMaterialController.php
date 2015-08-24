@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\TmpMaterial;
+use common\models\Material;
 use backend\base\BaseBackPublicController;
 use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
@@ -22,7 +23,8 @@ class TmpMaterialController extends BaseBackPublicController
     private $tmpMaterialTypes = ['image','voice','video','thumb'];
     private $tmpMaterialSizes = ['image' => 1048576,'voice' => 2097152,'video' => 10485760,'thumb' => 65536];
     private $allowTypes = ['image' => ['jpg','jpeg'],'voice' => ['amr','mp3'],'video' => ['mp4'],'thumb' => ['jpeg','jpg']];
-    
+    const EXPIRE_TIME = 259200;//三天之后过期（单位：秒）
+
     public function behaviors()
     {
         return [
@@ -51,6 +53,7 @@ class TmpMaterialController extends BaseBackPublicController
            foreach($models AS $k => $v) {
                $data[$k] = $v->attributes;
                $data[$k]['create_time'] = date('Y-m-d H:s',$v['create_time']);
+               $data[$k]['expire_time'] = date('Y-m-d H:s',$v['create_time'] + self::EXPIRE_TIME);
            }
         }
         return $this->render('index', [
@@ -87,6 +90,7 @@ class TmpMaterialController extends BaseBackPublicController
         $ret = $this->upload($post);
         $post['media_id'] = $ret['media_id'];//保存微信API返回的素材ID
         $post['public_id'] = $this->pid;
+        $post['pic_id'] = $ret['pic_id'];      
         $post['create_time'] = $ret['created_at'];
         $model = new TmpMaterial();
         if ($model->load(['TmpMaterial' => $post]) && $model->save()) {
@@ -112,7 +116,7 @@ class TmpMaterialController extends BaseBackPublicController
         //执行上传
         $ret = $uploader->upload($_FILES['FileData']);
         if ($ret === false)
-            throw new NotFoundHttpException(Yii::t('yii',$uploader->errorMsg));   
+            throw new NotFoundHttpException(Yii::t('yii',$uploader->errorMsg));
         //用返回的信息拼接图片路径，将图片上传到微信
         $filePath = $uploader->uploadFileInfo['savepath'] . $uploader->uploadFileInfo['savename'];
         if (class_exists('\CURLFile')) {
@@ -123,6 +127,25 @@ class TmpMaterialController extends BaseBackPublicController
         $uploadRet = $this->wechat->uploadMedia($data,$post['type']);
         if ($uploadRet == false || empty($uploadRet))
             throw new NotFoundHttpException(Yii::t('yii','上传素材到微信失败'));
+            
+        //将素材信息保存到数据库，以方便展示
+        $model = new Material;
+        $model->public_id = $this->pid;
+        $model->name = $_FILES['FileData']['name'];//原始文件名
+        $model->filepath = $post['type'] . '/' . $uploader->uploadFileInfo['secondfilePath'];
+        $model->filename = $uploader->uploadFileInfo['savename'];
+        $model->type = $post['type'];
+        //获取图片大小
+        $picSize = getimagesize($filePath);
+        $model->imgwidth = $picSize[0];
+        $model->imgheight = $picSize[1];
+        $model->filesize = $_FILES['FileData']['size'];
+        $model->create_time = time();
+        $pic_id = 0;
+        if ($model->save()) {
+            $pic_id = $model->id;
+        }
+        $uploadRet['pic_id'] = $pic_id; 
         return $uploadRet;
     }
 

@@ -76,7 +76,7 @@ class Uploader extends Component
 				$file['extension']  = $this->getExt($file['name']);
 				$file['savepath']   = $savePath;
 				$file['savename']   = $this->getSaveName($file);
-				$file['secondfilepath'] = $this->secondFilePath;
+				$file['secondfilePath'] = $this->secondFilePath;
 				// 自动检查附件
 				if($this->autoCheck) {
 					if(!$this->check($file))
@@ -142,7 +142,7 @@ class Uploader extends Component
 				$file['extension']  = $this->getExt($file['name']);
 				$file['savepath']   = $savePath;
 				$file['savename']   = $this->getSaveName($file);
-				$file['secondfilepath'] = $this->secondFilePath;
+				$file['secondfilePath'] = $this->secondFilePath;
 				// 自动检查附件
 				if($this->autoCheck) {
 					if(!$this->check($file))
