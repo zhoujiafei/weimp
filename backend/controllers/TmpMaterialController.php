@@ -20,7 +20,7 @@ use yii\data\Pagination;
 class TmpMaterialController extends BaseBackPublicController
 {
     private $tmpMaterialTypes = ['image','voice','video','thumb'];
-    private $tmpMaterialSizes = ['image' => 1024,'voice' => 2048,'video' => 10240,'thumb' => 64];
+    private $tmpMaterialSizes = ['image' => 1048576,'voice' => 2097152,'video' => 10485760,'thumb' => 65536];
     private $allowTypes = ['image' => ['jpg','jpeg'],'voice' => ['amr','mp3'],'video' => ['mp4'],'thumb' => ['jpeg','jpg']];
     
     public function behaviors()
@@ -85,12 +85,9 @@ class TmpMaterialController extends BaseBackPublicController
         //获取POST数据
         $post = Yii::$app->request->post();
         $ret = $this->upload($post);
-        if ($ret === false)
-           throw new NotFoundHttpException(Yii::t('yii','创建临时素材失败'));
-
         $post['media_id'] = $ret['media_id'];//保存微信API返回的素材ID
         $post['public_id'] = $this->pid;
-        $post['create_time'] = time();
+        $post['create_time'] = $ret['created_at'];
         $model = new TmpMaterial();
         if ($model->load(['TmpMaterial' => $post]) && $model->save()) {
             $model->order_id = $model->id;
@@ -104,24 +101,29 @@ class TmpMaterialController extends BaseBackPublicController
     //执行上传
     private function upload($post = []) {
         if (empty($post) || empty($_FILES['FileData']))
-            return false;
+            throw new NotFoundHttpException(Yii::t('yii','没有上传文件'));
         //实例化上传组件
         $uploader = Yii::createObject([
                 'class' => 'common\components\Uploader',
                 'savePath' => '@upload/' .$post['type']. '/',
                 'allowExts' => $this->allowTypes[$post['type']],//暂时用扩展来判断类型
+                'maxSize' => $this->tmpMaterialSizes[$post['type']],
         ]);
         //执行上传
         $ret = $uploader->upload($_FILES['FileData']);
-        if ($ret === false) {
-            return false;
+        if ($ret === false)
+            throw new NotFoundHttpException(Yii::t('yii',$uploader->errorMsg));   
+        //用返回的信息拼接图片路径，将图片上传到微信
+        $filePath = $uploader->uploadFileInfo['savepath'] . $uploader->uploadFileInfo['savename'];
+        if (class_exists('\CURLFile')) {
+           $data = ['media' => new \CURLFile($filePath)];
+        }else{
+           $data = ['media' => '@' . $filePath];
         }
-        //用返回的信息拼接图片路径，将图片上传到
-        
-           
-        
-        
-        return ['media_id' => 'zhouxingxing'];
+        $uploadRet = $this->wechat->uploadMedia($data,$post['type']);
+        if ($uploadRet == false || empty($uploadRet))
+            throw new NotFoundHttpException(Yii::t('yii','上传素材到微信失败'));
+        return $uploadRet;
     }
 
     //删除临时素材（此处提供的删除只是软删除，只是把数据库保存的关联记录删除掉，实际上每个临时素材最多在微信服务器上保存3天时间，自动会被删除）

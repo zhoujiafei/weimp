@@ -23,7 +23,8 @@ class Uploader extends Component
 	private $uploadFileInfo;
 	//最近一次的错误 
 	private $error = '';
-	
+	//返回二级目录
+	private $secondFilePath = '';
 	//获取保存路径
 	public function getSavePath()
 	{
@@ -75,6 +76,7 @@ class Uploader extends Component
 				$file['extension']  = $this->getExt($file['name']);
 				$file['savepath']   = $savePath;
 				$file['savename']   = $this->getSaveName($file);
+				$file['secondfilepath'] = $this->secondFilePath;
 				// 自动检查附件
 				if($this->autoCheck) {
 					if(!$this->check($file))
@@ -140,6 +142,7 @@ class Uploader extends Component
 				$file['extension']  = $this->getExt($file['name']);
 				$file['savepath']   = $savePath;
 				$file['savename']   = $this->getSaveName($file);
+				$file['secondfilepath'] = $this->secondFilePath;
 				// 自动检查附件
 				if($this->autoCheck) {
 					if(!$this->check($file))
@@ -188,7 +191,7 @@ class Uploader extends Component
 	 * 保存一个文件
 	 * 
 	 */
-	private function save($file){
+	private function save($file) {
 		$filename = $file['savepath'] . $file['savename'];
 		if(!$this->uploadReplace && is_file($filename)) {
 			// 不覆盖同名文件
@@ -214,7 +217,7 @@ class Uploader extends Component
 	private function getExt($filename){
 		$pathinfo = pathinfo($filename);
         return $pathinfo['extension'];
-	}	
+	}
 
 	/**
 	 * 文件命名 规则
@@ -228,7 +231,9 @@ class Uploader extends Component
 	 * 获取二级目录路径
 	 */
 	private function getSecondPath() {
-	    return date('Y',time()) . DIRECTORY_SEPARATOR . date('m',time()) . DIRECTORY_SEPARATOR;
+	    
+	    $this->secondFilePath = date('Y',time()) . DIRECTORY_SEPARATOR . date('m',time()) . DIRECTORY_SEPARATOR;
+	    return $this->secondFilePath;
 	}
 
 	/**
@@ -331,7 +336,11 @@ class Uploader extends Component
 	 * 获取文件上传成功之后的信息
 	 */
 	public function getUploadFileInfo(){
-      return $this->uploadFileInfo;
+	  if (is_array($this->uploadFileInfo) && count($this->uploadFileInfo) == 1){
+	      return $this->uploadFileInfo[0];
+	  }else{
+	      return $this->uploadFileInfo;
+	  }
    }
 
    /**
