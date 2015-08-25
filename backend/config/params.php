@@ -27,6 +27,7 @@ return [
                ['name' => '临时素材','url' => ['tmp-material/index'],'mark' => 'tmp-material'],
                ['name' => '永久素材','url' => ['forever-material/index'],'mark' => 'forever-material'],
          ]],
+
          /*
          ['name' => '客服管理','url'  => ['custom-service/index'],'mark' => 'custom-service'],
          ['name' => '微信小店','url'  => '#','mark' => 'shop'],

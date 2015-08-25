@@ -150,8 +150,7 @@ class TmpMaterialController extends BaseBackPublicController
     }
 
     //删除临时素材（此处提供的删除只是软删除，只是把数据库保存的关联记录删除掉，实际上每个临时素材最多在微信服务器上保存3天时间，自动会被删除）
-    public function actionDelete()
-    {
+    public function actionDelete() {
         $id = Yii::$app->request->post('id');
         if (!intval($id))
            Error::output(Error::ERR_NOID);
@@ -165,11 +164,10 @@ class TmpMaterialController extends BaseBackPublicController
     }
 
     //加载模型
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = TmpMaterial::findOne($id)) !== null) {
             return $model;
-        } else {
+        }else{
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
