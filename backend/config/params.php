@@ -23,9 +23,10 @@ return [
                ['name' => '用户分组','url' => ['members-group/index'],'mark' => 'members-group'],
                ['name' => '用户信息','url' => ['members/index'],'mark' => 'members'],
          ]],
-         ['name' => '素材管理','url' => '#','mark' => 'material','icon' => 'icon-file','submenus' => [
+         ['name' => '素材管理','url' => '#','mark' => 'materials','icon' => 'icon-file','submenus' => [
                ['name' => '临时素材','url' => ['tmp-material/index'],'mark' => 'tmp-material'],
                ['name' => '永久素材','url' => ['forever-material/index'],'mark' => 'forever-material'],
+               ['name' => '本地素材','url' => ['material/index'],'mark' => 'material'],
          ]],
          /*
          ['name' => '客服管理','url'  => ['custom-service/index'],'mark' => 'custom-service'],

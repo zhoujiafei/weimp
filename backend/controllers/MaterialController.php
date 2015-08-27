@@ -4,15 +4,14 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Material;
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
+use backend\base\BaseBackPublicController;
+use backend\helpers\Error;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
-/**
- * MaterialController implements the CRUD actions for Material model.
- */
-class MaterialController extends Controller
+//本地素材库
+class MaterialController extends BaseBackPublicController
 {
     public function behaviors()
     {
@@ -26,90 +25,55 @@ class MaterialController extends Controller
         ];
     }
 
-    /**
-     * Lists all Material models.
-     * @return mixed
-     */
+    //列表页显示
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Material::find(),
-        ]);
-
+        $query = Material::find()->where(['public_id' => $this->pid]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
+        $models = $query->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->orderBy(['create_time' => SORT_DESC]) //倒序排列
+                        ->all();
+        $data = [];
+        if (!empty($models)) {
+           foreach($models AS $k => $v) {
+               $data[$k] = $v->attributes;
+               $data[$k]['create_time'] = date('Y-m-d H:s',$v['create_time']);
+           }
+        }
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+              'models' => $data,
+              'pages' => $pages,
         ]);
     }
 
-    /**
-     * Displays a single Material model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Material model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Material();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+    //表单页
+    public function actionForm() {
+        $id = Yii::$app->request->get('id');
+        if (empty($id)) {
+           throw new NotFoundHttpException(Yii::t('yii','请选择素材再查看详情'));
         }
-    }
-
-    /**
-     * Updates an existing Material model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('form', [
+            'model' => $model,
+        ]);
     }
 
-    /**
-     * Deletes an existing Material model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
+    //删除素材
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $id = Yii::$app->request->post('id');
+        if (!intval($id))
+           Error::output(Error::ERR_NOID);
+        if ($model->delete()) {
+           Error::output(Error::SUCCESS);
+        }else{
+           Error::output(Error::ERR_FAIL);
+        }
     }
 
-    /**
-     * Finds the Material model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Material the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+    //加载模型
     protected function findModel($id)
     {
         if (($model = Material::findOne($id)) !== null) {
