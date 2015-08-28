@@ -136,15 +136,16 @@ class TmpMaterialController extends BaseBackPublicController
         $model->filename = $uploader->uploadFileInfo['savename'];
         $model->type = $post['type'];
         //获取图片大小
-        $picSize = getimagesize($filePath);
-        $model->imgwidth = $picSize[0];
-        $model->imgheight = $picSize[1];
+        if ($post['type'] == 'image' || $post['type'] == 'thumb') {
+            $picSize = getimagesize($filePath);
+            $model->imgwidth = $picSize[0];
+            $model->imgheight = $picSize[1];
+        }
         $model->filesize = $_FILES['FileData']['size'];
         $model->create_time = time();
         $pic_id = 0;
-        if ($model->save()) {
+        if ($model->save())
             $pic_id = $model->id;
-        }
         $uploadRet['pic_id'] = $pic_id; 
         return $uploadRet;
     }

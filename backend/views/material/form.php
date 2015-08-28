@@ -31,21 +31,37 @@ $(document).ready(function(){
 				<span class="icon">
 					<i class="icon-align-justify"></i>								
 				</span>
-				<h5><?= $op_text;?>本地素材</h5>
+				<h5>查看本地素材</h5>
 			</div>
 			<div class="widget-content nopadding">
 				<form action="<?= Url::to(['members-group/' . $action]) ?>" method="post" class="form-horizontal" />
 					<div class="control-group">
 						<label class="control-label">素材名称</label>
 						<div class="controls">
-							<input type="text" value="<?= $name ?>" />
+							<input type="text" value="<?= $name ?>" readonly />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">素材</label>
+						<div class="controls">
+    						<?php $url = Yii::$app->params['upload_url'] . $filepath . $filename;?>
+    						<?php if ($type == 'image' || $type == 'thumb'):?>
+    						<img src="<?= $url ?>" />
+    						<?php elseif ($type == 'video'):?>
+    						<video src="<?= $url ?>" controls="controls">
+                            	您的浏览器不支持 video 标签。
+                            </video>
+    						<?php elseif ($type == 'voice'):?>
+    						<audio src="<?= $url ?>">
+                            	您的浏览器不支持 audio 标签。
+                            </audio>
+    						<?php endif;?>
 						</div>
 					</div>
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
 						<input type="hidden" name="pid" value="<?= Yii::$app->controller->pid ?>" />
 						<input type="hidden" name="_csrf" value="<?= Yii::$app->request->csrfToken ?>">
-						<button type="submit" class="btn btn-primary"><?= $op_text;?></button>
 					</div>
 				</form>
 			</div>

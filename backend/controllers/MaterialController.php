@@ -61,11 +61,12 @@ class MaterialController extends BaseBackPublicController
     }
 
     //删除素材
-    public function actionDelete($id)
+    public function actionDelete()
     {
         $id = Yii::$app->request->post('id');
         if (!intval($id))
            Error::output(Error::ERR_NOID);
+        $model = $this->findModel($id);
         if ($model->delete()) {
            Error::output(Error::SUCCESS);
         }else{
