@@ -90,7 +90,7 @@ class TmpMaterialController extends BaseBackPublicController
         $ret = $this->upload($post);
         $post['media_id'] = $ret['media_id'];//保存微信API返回的素材ID
         $post['public_id'] = $this->pid;
-        $post['pic_id'] = $ret['pic_id'];      
+        $post['material_id'] = $ret['material_id'];      
         $post['create_time'] = $ret['created_at'];
         $model = new TmpMaterial();
         if ($model->load(['TmpMaterial' => $post]) && $model->save()) {
@@ -143,10 +143,10 @@ class TmpMaterialController extends BaseBackPublicController
         }
         $model->filesize = $_FILES['FileData']['size'];
         $model->create_time = time();
-        $pic_id = 0;
+        $material_id = 0;
         if ($model->save())
-            $pic_id = $model->id;
-        $uploadRet['pic_id'] = $pic_id; 
+            $material_id = $model->id;
+        $uploadRet['material_id'] = $material_id; 
         return $uploadRet;
     }
 
