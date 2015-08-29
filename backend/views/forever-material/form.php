@@ -56,7 +56,6 @@ $(document).ready(function(){
 							<input type="file" name="FileData" />
 						</div>
 					</div>
-					
 					<div class="form-actions">
 						<input type="hidden" name="id" value="<?= $id ?>" />
 						<input type="hidden" name="pid" value="<?= Yii::$app->controller->pid ?>" />
