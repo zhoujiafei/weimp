@@ -12,7 +12,7 @@ $op_text = '创建';
 $this->params = ['breadcrumb'  => [
                                     ['name' => '素材管理','url' => '#','current' => 0],
                                     ['name' => '临时素材','url' => Url::to(['tmp-material/index','pid' => Yii::$app->controller->pid]),'current' => 0],
-                                    ['name' => $op_text . '素材','url' => '#','current' => 1]
+                                    ['name' => $op_text . '临时素材','url' => '#','current' => 1]
                                   ],
                 ];
 ?>

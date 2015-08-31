@@ -49,4 +49,9 @@ class TmpMaterial extends \yii\db\ActiveRecord
             'order_id' => '排序ID',
         ];
     }
+    
+    //获取素材信息
+    public function getMaterial() {
+       return $this->hasOne(Material::className(), ['id' => 'material_id']);
+    }
 }

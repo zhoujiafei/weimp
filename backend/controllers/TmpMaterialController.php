@@ -25,8 +25,7 @@ class TmpMaterialController extends BaseBackPublicController
     private $allowTypes = ['image' => ['jpg','jpeg'],'voice' => ['amr','mp3'],'video' => ['mp4'],'thumb' => ['jpeg','jpg']];
     const EXPIRE_TIME = 259200;//三天之后过期（单位：秒）
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -39,8 +38,7 @@ class TmpMaterialController extends BaseBackPublicController
     }
 
     //列表页
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $query = TmpMaterial::find()->where(['public_id' => $this->pid]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
@@ -69,10 +67,11 @@ class TmpMaterialController extends BaseBackPublicController
         if (!empty($id)) {
            $model = $this->findModel($id);
         }
-        return $this->render('form', [
-            'model' => $model,
-            'material_types' => $this->tmpMaterialTypes
-        ]);
+        if (!empty($model)) {
+           return $this->render('detail', ['model' => $model]);
+        }else{
+           return $this->render('form', ['material_types' => $this->tmpMaterialTypes]);
+        }
     }
 
     //新增一个临时素材
@@ -84,11 +83,10 @@ class TmpMaterialController extends BaseBackPublicController
         $name = Yii::$app->request->post('name',null);
         if (empty($name))
            throw new NotFoundHttpException(Yii::t('yii','素材名称不能为空'));
-        
         //获取POST数据
         $post = Yii::$app->request->post();
         $ret = $this->upload($post);
-        $post['media_id'] = $ret['media_id'];//保存微信API返回的素材ID
+        $post['media_id'] = !empty($ret['media_id']) ? $ret['media_id'] : (!empty($ret['thumb_media_id']) ? $ret['thumb_media_id'] : '');//保存微信API返回的素材ID
         $post['public_id'] = $this->pid;
         $post['material_id'] = $ret['material_id'];      
         $post['create_time'] = $ret['created_at'];
