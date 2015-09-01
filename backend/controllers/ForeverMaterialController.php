@@ -148,8 +148,7 @@ class ForeverMaterialController extends BaseBackPublicController
     }
 
     //删除素材
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $id = Yii::$app->request->post('id');
         if (!intval($id))
            Error::output(Error::ERR_NOID);
@@ -163,11 +162,10 @@ class ForeverMaterialController extends BaseBackPublicController
     }
 
     //加载模型
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = ForeverMaterial::findOne($id)) !== null) {
             return $model;
-        } else {
+        }else{
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
