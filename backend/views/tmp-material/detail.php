@@ -51,7 +51,7 @@ $(document).ready(function(){
                             	您的浏览器不支持 video 标签。
                             </video>
     						<?php elseif ($type == 'voice'):?>
-    						<audio src="<?= $url ?>">
+    						<audio src="<?= $url ?>" controls="controls">
                             	您的浏览器不支持 audio 标签。
                             </audio>
     						<?php endif;?>
