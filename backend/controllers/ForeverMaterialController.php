@@ -14,12 +14,11 @@ use yii\data\Pagination;
 //永久素材控制器
 class ForeverMaterialController extends BaseBackPublicController
 {
-    private $forevelMaterialTypes = ['image','voice','video','thumb'];
-    private $forevelMaterialSizes = ['image' => 1048576,'voice' => 2097152,'video' => 10485760,'thumb' => 65536];
-    private $allowTypes = ['image' => ['jpg','jpeg'],'voice' => ['amr','mp3'],'video' => ['mp4'],'thumb' => ['jpeg','jpg']];
+    private $forevelMaterialTypes = ['image','voice','video','thumb','news'];
+    private $forevelMaterialSizes = ['image' => 2097152,'voice' => 2097152,'video' => 10485760,'thumb' => 2097152];
+    private $allowTypes = ['image' => ['jpg','jpeg','bmp','png','gif'],'voice' => ['mp3','wma','wav','amr'],'video' => ['mp4'],'thumb' => ['jpg','jpeg','bmp','png','gif']];
 
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -32,8 +31,7 @@ class ForeverMaterialController extends BaseBackPublicController
     }
 
     //永久素材列表页
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $query = ForeverMaterial::find()->where(['public_id' => $this->pid]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(),'pageSize' => 20]);
@@ -73,23 +71,22 @@ class ForeverMaterialController extends BaseBackPublicController
         $type = Yii::$app->request->post('type',null);
         if (empty($type) || !in_array($type,$this->forevelMaterialTypes))
            throw new NotFoundHttpException(Yii::t('yii','素材类型有误，请在 [' .implode(',',$this->forevelMaterialTypes). '] 中选取一种'));
-        
         $name = Yii::$app->request->post('name',null);
         if (empty($name))
            throw new NotFoundHttpException(Yii::t('yii','素材名称不能为空'));
-        
         //获取POST数据
         $post = Yii::$app->request->post();
         $ret = $this->upload($post);
         $post['media_id'] = $ret['media_id'];//保存微信API返回的素材ID
         $post['public_id'] = $this->pid;
-        $post['material_id'] = $ret['material_id'];      
-        $post['create_time'] = $ret['created_at'];
+        $post['material_id'] = $ret['material_id'];
+        $post['url'] = !empty($ret['url']) ? $ret['url'] : '';
+        $post['create_time'] = time();
         $model = new ForeverMaterial();
         if ($model->load(['ForeverMaterial' => $post]) && $model->save()) {
             $model->order_id = $model->id;
             $model->save();
-            return $this->redirect(['forevel-material/index','pid' => $this->pid]);
+            return $this->redirect(['forever-material/index','pid' => $this->pid]);
         } else {
             throw new NotFoundHttpException(Yii::t('yii','An internal server error occurred.'));
         }
@@ -117,10 +114,17 @@ class ForeverMaterialController extends BaseBackPublicController
         }else{
            $data = ['media' => '@' . $filePath];
         }
-        $uploadRet = $this->wechat->uploadMedia($data,$post['type']);
+
+        $isVideo = false;
+        $videoInfo = [];
+        //判断是不是视频
+        if ($post['type'] == 'video') {
+            $isVideo = true;
+            $videoInfo = ['title' => $post['title'],'introduction' => $post['introduction']];
+        }
+        $uploadRet = $this->wechat->uploadForeverMedia($data,$post['type'],$isVideo,$videoInfo);
         if ($uploadRet == false || empty($uploadRet))
-            throw new NotFoundHttpException(Yii::t('yii','上传素材到微信失败'));
-            
+            throw new NotFoundHttpException(Yii::t('yii','上传素材到微信失败')); 
         //将素材信息保存到数据库，以方便展示
         $model = new Material;
         $model->public_id = $this->pid;

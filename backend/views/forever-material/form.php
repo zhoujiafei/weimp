@@ -11,8 +11,8 @@ $action = 'create';
 $op_text = '创建';
 $this->params = ['breadcrumb'  => [
                                     ['name' => '素材管理','url' => '#','current' => 0],
-                                    ['name' => '永久素材','url' => Url::to(['forevel-material/index','pid' => Yii::$app->controller->pid]),'current' => 0],
-                                    ['name' => $op_text . '素材','url' => '#','current' => 1]
+                                    ['name' => '永久素材','url' => Url::to(['forever-material/index','pid' => Yii::$app->controller->pid]),'current' => 0],
+                                    ['name' => $op_text . '永久素材','url' => '#','current' => 1]
                                   ],
                 ];
 ?>
@@ -20,6 +20,16 @@ $this->params = ['breadcrumb'  => [
 $(document).ready(function(){
 	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	$('select').select2();
+
+	//类型切换事件
+	$('#material_type_selector').on('click',function(){
+		var type = $(this).val();
+		if (type == 'video') {
+			$('#video_title,#video_introduction').show();
+		}else{
+			$('#video_title,#video_introduction').hide();
+		}
+	})
 });
 </script>
 <div class="row-fluid">
@@ -32,7 +42,7 @@ $(document).ready(function(){
 				<h5>创建永久素材</h5>
 			</div>
 			<div class="widget-content nopadding">
-				<form action="<?= Url::to(['tmp-material/' . $action]) ?>" method="post" class="form-horizontal" enctype="multipart/form-data" />
+				<form action="<?= Url::to(['forever-material/' . $action]) ?>" method="post" class="form-horizontal" enctype="multipart/form-data" />
 					<div class="control-group">
 						<label class="control-label">素材名称</label>
 						<div class="controls">
@@ -48,6 +58,18 @@ $(document).ready(function(){
 								<option value="<?= $v ?>" /><?= $v ?>
 								<?php endforeach; ?>
 							</select>
+						</div>
+					</div>
+					<div class="control-group" id="video_title" style="display:none;">
+						<label class="control-label">视频标题</label>
+						<div class="controls">
+							<input type="text" placeholder="这里输入视频标题..." name="title" />
+						</div>
+					</div>
+					<div class="control-group" id="video_introduction" style="display:none;">
+						<label class="control-label">视频描述</label>
+						<div class="controls">
+							<textarea  placeholder="这里输入视频描述..." name="introduction"></textarea>
 						</div>
 					</div>
 					<div class="control-group">
@@ -66,5 +88,4 @@ $(document).ready(function(){
 			</div>
 		</div>						
 	</div>
-	
 </div>

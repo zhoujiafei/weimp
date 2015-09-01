@@ -35,7 +35,9 @@ class ForeverMaterial extends \yii\db\ActiveRecord
             [['public_id', 'material_id', 'create_time', 'order_id'], 'integer'],
             [['name', 'type', 'media_id'], 'required'],
             [['name', 'type'], 'string', 'max' => 20],
-            [['media_id'], 'string', 'max' => 200]
+            [['media_id','introduction'], 'string', 'max' => 200],
+            [['title'], 'string', 'max' => 50],
+            [['url'], 'string', 'max' => 250]
         ];
     }
 
