@@ -12,6 +12,8 @@
 			}else{
 				$('#material-tpl-content').html($('#upload-tpl').tmpl());
 			}
+			$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
+			$('select').select2();
 		});
 	})
 })(jQuery);
