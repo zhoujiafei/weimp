@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2015 年 08 月 28 日 10:27
+-- 生成日期: 2015 年 09 月 09 日 15:04
 -- 服务器版本: 5.6.17
 -- PHP 版本: 5.5.27
 
@@ -45,8 +45,28 @@ CREATE TABLE IF NOT EXISTS `liv_custom_menus` (
   `update_time` int(11) NOT NULL DEFAULT '0',
   `type` varchar(30) NOT NULL DEFAULT 'click' COMMENT '类型',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `liv_forever_material`
+--
+
+CREATE TABLE IF NOT EXISTS `liv_forever_material` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `public_id` int(10) NOT NULL DEFAULT '0',
+  `material_id` int(11) NOT NULL DEFAULT '0' COMMENT '关联本地素材库的素材ID',
+  `name` varchar(20) NOT NULL COMMENT '素材名称（用户后台显示，对于真正提交微信的时候作用不大）',
+  `type` varchar(20) NOT NULL COMMENT '素材类型',
+  `media_id` varchar(200) NOT NULL COMMENT '微信平台上对应的素材ID',
+  `title` varchar(50) DEFAULT NULL COMMENT '视频标题',
+  `introduction` varchar(200) DEFAULT NULL COMMENT '视频素材描述',
+  `url` varchar(250) DEFAULT NULL COMMENT 'url',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '素材上传时间',
+  `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='永久素材表' AUTO_INCREMENT=7 ;
 -- --------------------------------------------------------
 
 --
@@ -66,8 +86,7 @@ CREATE TABLE IF NOT EXISTS `liv_material` (
   `create_time` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 -- --------------------------------------------------------
 
 --
@@ -92,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `liv_members` (
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `openid` (`openid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户表，用户扫描订阅该公众号之后，自动保存用户信息' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户表，用户扫描订阅该公众号之后，自动保存用户信息' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -110,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `liv_members_group` (
   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户分组' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户分组' AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
@@ -134,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `liv_public_number` (
   `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `order_id` int(10) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='公众号相关信息表' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='公众号相关信息表' AUTO_INCREMENT=36 ;
 
 -- --------------------------------------------------------
 
@@ -145,14 +164,14 @@ CREATE TABLE IF NOT EXISTS `liv_public_number` (
 CREATE TABLE IF NOT EXISTS `liv_tmp_material` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `public_id` int(10) NOT NULL DEFAULT '0',
-  `pic_id` int(11) NOT NULL DEFAULT '0' COMMENT '关联本地数据库的图片ID',
+  `material_id` int(11) NOT NULL DEFAULT '0' COMMENT '关联本地素材库的素材ID',
   `name` varchar(20) NOT NULL COMMENT '素材名称（用户后台显示，对于真正提交微信的时候作用不大）',
   `type` varchar(20) NOT NULL COMMENT '素材类型',
   `media_id` varchar(200) NOT NULL COMMENT '微信平台上对应的素材ID',
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '素材上传时间',
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='临时素材表' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='临时素材表' AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
@@ -171,12 +190,11 @@ CREATE TABLE IF NOT EXISTS `liv_user` (
   `created_at` int(11) NOT NULL DEFAULT '0',
   `updated_at` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+--
+-- 转存表中的数据 `liv_user`
+--
 
 INSERT INTO `liv_user` (`id`, `username`, `password_hash`, `password_reset_token`, `email`, `auth_key`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'admin', '$2y$13$HQfwh/qTwKH3z7hBRZCaw.sOgK19PmVjrJR/RMPceFkrLaVCFhlz.', '', '', '', 10, 0, 0);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
