@@ -51,7 +51,7 @@ class TmpMaterialController extends BaseBackPublicController
            foreach($models AS $k => $v) {
                $data[$k] = $v->attributes;
                $data[$k]['create_time'] = date('Y-m-d H:s',$v['create_time']);
-               $data[$k]['expire_time'] = date('Y-m-d H:s',$v['create_time'] + self::EXPIRE_TIME);
+               $data[$k]['expire_time'] = ($v['create_time'] + self::EXPIRE_TIME < time()) ? 'Expired' : date('Y-m-d H:s',$v['create_time'] + self::EXPIRE_TIME);
            }
         }
         return $this->render('index', [

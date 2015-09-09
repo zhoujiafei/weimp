@@ -45,7 +45,7 @@ $this->params = ['breadcrumb'  => [
 						<td><input type="checkbox" /></td>
 						<td><?= $v['name'] ?></td>
 						<td><?= $v['type'] ?></td>
-						<td><?= $v['expire_time'] ?></td>
+						<td><?php if ($v['expire_time'] == 'Expired'): ?><span class="label label-warning">已过期</span><?php else: ?><?= $v['expire_time'] ?><?php endif;?></td>
 						<td><?= $v['create_time'] ?></td>
 						<td>
 						   <a href="<?= Url::to(['tmp-material/form','id' => $v['id'],'pid' => Yii::$app->controller->pid]);?>" class="btn btn-primary"><i class="icon-pencil icon-white"></i> 详情</a>
