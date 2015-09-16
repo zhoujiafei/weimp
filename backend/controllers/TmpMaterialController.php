@@ -125,7 +125,7 @@ class TmpMaterialController extends BaseBackPublicController
         $uploadRet = $this->wechat->uploadMedia($data,$post['type']);
         if ($uploadRet == false || empty($uploadRet))
             throw new NotFoundHttpException(Yii::t('yii','上传素材到微信失败'));
-            
+
         //将素材信息保存到数据库，以方便展示
         $model = new Material;
         $model->public_id = $this->pid;
