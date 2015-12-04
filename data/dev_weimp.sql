@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: 127.0.0.1
--- 生成日期: 2015 年 09 月 09 日 15:04
+-- 生成日期: 2015 年 12 月 04 日 10:02
 -- 服务器版本: 5.6.17
--- PHP 版本: 5.5.27
+-- PHP 版本: 5.4.30
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `liv_custom_menus` (
   `update_time` int(11) NOT NULL DEFAULT '0',
   `type` varchar(30) NOT NULL DEFAULT 'click' COMMENT '类型',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,8 @@ CREATE TABLE IF NOT EXISTS `liv_forever_material` (
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '素材上传时间',
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='永久素材表' AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='永久素材表' AUTO_INCREMENT=1 ;
+
 -- --------------------------------------------------------
 
 --
@@ -86,7 +87,8 @@ CREATE TABLE IF NOT EXISTS `liv_material` (
   `create_time` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `type` (`type`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 -- --------------------------------------------------------
 
 --
@@ -111,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `liv_members` (
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `openid` (`openid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户表，用户扫描订阅该公众号之后，自动保存用户信息' AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户表，用户扫描订阅该公众号之后，自动保存用户信息' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `liv_members_group` (
   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户分组' AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='用户分组' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -153,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `liv_public_number` (
   `update_time` int(10) NOT NULL DEFAULT '0' COMMENT '更新时间',
   `order_id` int(10) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='公众号相关信息表' AUTO_INCREMENT=36 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='公众号相关信息表' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -171,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `liv_tmp_material` (
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '素材上传时间',
   `order_id` int(11) NOT NULL DEFAULT '0' COMMENT '排序ID',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='临时素材表' AUTO_INCREMENT=24 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='临时素材表' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -190,11 +192,8 @@ CREATE TABLE IF NOT EXISTS `liv_user` (
   `created_at` int(11) NOT NULL DEFAULT '0',
   `updated_at` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
---
--- 转存表中的数据 `liv_user`
---
 
 INSERT INTO `liv_user` (`id`, `username`, `password_hash`, `password_reset_token`, `email`, `auth_key`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'admin', '$2y$13$HQfwh/qTwKH3z7hBRZCaw.sOgK19PmVjrJR/RMPceFkrLaVCFhlz.', '', '', '', 10, 0, 0);
