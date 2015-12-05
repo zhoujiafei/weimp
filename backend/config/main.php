@@ -35,7 +35,7 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => true,
+            'showScriptName' => false,
         ],
         'cache' => [
             'class' => 'yii\caching\DbCache',
