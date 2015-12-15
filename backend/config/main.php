@@ -36,6 +36,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '.html' //定义伪静态
         ],
         'cache' => [
             'class' => 'yii\caching\DbCache',

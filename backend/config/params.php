@@ -16,8 +16,7 @@ return [
          ['name' => 'Dashboard','url'  => ['public-admin/index'],'mark' => 'public-admin','icon' => 'icon-home'],
          ['name' => '菜单管理','url'  => ['custom-menus/index'],'mark' => 'custom-menus','icon' => 'icon-th-list'],
          ['name' => '消息管理','url'  => '#','mark' => 'message','icon' => 'icon-envelope','submenus' => [
-               ['name' => '接收消息','url' => ['message-accept/index'],'mark' => 'message-accept'],
-               ['name' => '发送消息','url' => ['message-send/index'],'mark' => 'message-send'],
+               ['name' => '普通消息','url' => ['message/index'],'mark' => 'message']
          ]],
          ['name' => '用户管理','url' => '#','mark' => 'members_manger','icon' => 'icon-user','submenus' => [
                ['name' => '用户分组','url' => ['members-group/index'],'mark' => 'members-group'],
